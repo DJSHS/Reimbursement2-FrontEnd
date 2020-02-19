@@ -3,14 +3,38 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { MyReimbursementComponent } from './components/my-reimbursement/my-reimbursement.component';
+import { AllReimbursementComponent } from './components/all-reimbursement/all-reimbursement.component';
+import { NewReimbursementComponent } from './components/new-reimbursement/new-reimbursement.component';
+import { NewEmployeeComponent } from './components/new-employee/new-employee.component';
+import { AllEmployeeComponent } from './components/all-employee/all-employee.component';
+import { ReimbursementComponent } from './components/reimbursement/reimbursement.component';
+import { LoginComponent } from './components/login/login.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent,
+    HomeComponent,
+    ProfileComponent,
+    MyReimbursementComponent,
+    AllReimbursementComponent,
+    NewReimbursementComponent,
+    NewEmployeeComponent,
+    AllEmployeeComponent,
+    ReimbursementComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

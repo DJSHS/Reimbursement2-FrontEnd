@@ -2,8 +2,18 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const baseUri = `http://localhost`;
+const port = '8080';
+const name = 'reimbursement';
+
 export const environment = {
-  production: false
+ 
+  production: false,
+  environmentName: 'Default Environment',
+  loginUri: `${baseUri}:${port}/${name}/login/`,
+  employeeUri: `${baseUri}:${port}/${name}/employees/`,
+  departmentUri: `${baseUri}:${port}/${name}/departments/`,
+  reimbursementUri: `${baseUri}:${port}/${name}/reimbursements/`
 };
 
 /*
