@@ -1,0 +1,30 @@
+.lead {
+    font-weight: 500;
+    font-size: 2em;
+}
+
+div {
+    margin-left: 6%;
+}
+
+#contact {
+    margin-left: 0%;
+}
+
+span {
+    color: #007bff;
+}
+
+span:hover {
+    cursor: pointer;
+    color: #0e43ac;
+}
+
+strong {
+    color: red;
+}
+
+strong:hover {
+    text-decoration: underline solid red;
+    cursor: pointer;
+}

@@ -1,0 +1,14 @@
+#login-form {
+    margin-left: 12%;
+    margin-right: 12%;
+    padding: 3%;
+}
+
+label {
+    font-size: large;
+}
+
+span {
+    cursor: pointer;
+    float: right;
+}

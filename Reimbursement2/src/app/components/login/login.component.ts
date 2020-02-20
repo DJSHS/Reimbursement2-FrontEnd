@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.authService.login(this.empl).then(response => {
-      console.log(response);
       this.authService.empl = response;
       if (this.authService.empl !== null) {
         this.router.navigate(['home']);
@@ -31,5 +30,9 @@ export class LoginComponent implements OnInit {
     }, error => {
       console.warn(error);
     })
+  }
+
+  hideMessage() {
+    this.failed = false;
   }
 }

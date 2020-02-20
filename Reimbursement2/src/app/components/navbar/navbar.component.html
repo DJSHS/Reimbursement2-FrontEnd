@@ -2,7 +2,28 @@
     <a class="navbar-brand" routerLink="home">
         <img src="assets/logo.png" class="d-inline-block align-top" alt="Revature">
     </a>
-    <li class="nav-item">
-        <a class="nav-link" routerLink="login">Login</a>
+    <li id="title" class="nav-item" *ngIf="!authService.empl">
+        <div class="nav-link display-4 text text-center">Expense Reimbursement System</div>
+    </li>
+    <li class="nav-item" *ngIf="authService.empl">
+        <a class="nav-link" routerLink="home">Home</a>
+    </li>
+    <li class="nav-item" *ngIf="authService.empl && authService.empl.isManager">
+        <a class="nav-link" routerLink="employees">All Employees</a>
+    </li>
+    <li class="nav-item" *ngIf="authService.empl && authService.empl.isManager">
+        <a class="nav-link" routerLink="reimbursements">All Reimbursements</a>
+    </li>
+    <li class="nav-item" *ngIf="authService.empl  && authService.empl.managerId">
+        <a class="nav-link" routerLink="new/reimbursement">New Reimbursement</a>
+    </li>
+    <li class="nav-item" *ngIf="authService.empl">
+        <a class="nav-link" routerLink="my/reimbursements">My Reimbursement</a>
+    </li>
+    <li class="nav-item" *ngIf="authService.empl">
+        <a class="nav-link" routerLink="profile">Profile</a>
+    </li>
+    <li class="nav-item" *ngIf="authService.empl">
+        <a class="nav-link" (click)="logout()">Log Out</a>
     </li>
 </nav>

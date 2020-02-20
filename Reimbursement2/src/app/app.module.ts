@@ -15,6 +15,9 @@ import { AllEmployeeComponent } from './components/all-employee/all-employee.com
 import { ReimbursementComponent } from './components/reimbursement/reimbursement.component';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PendingReimbursementComponent } from './components/pending-reimbursement/pending-reimbursement.component';
+import { ResolvedReimbursementComponent } from './components/resolved-reimbursement/resolved-reimbursement.component';
+import { EmployeeComponent } from './components/employee/employee.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { HttpClientModule } from '@angular/common/http';
     NewEmployeeComponent,
     AllEmployeeComponent,
     ReimbursementComponent,
-    LoginComponent
+    LoginComponent,
+    PendingReimbursementComponent,
+    ResolvedReimbursementComponent,
+    EmployeeComponent
   ],
   imports: [
     BrowserModule,

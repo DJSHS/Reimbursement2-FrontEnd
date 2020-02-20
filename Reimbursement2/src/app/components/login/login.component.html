@@ -1,10 +1,16 @@
 <div>
-  <form id="login-form">
-      <label for="email">Email</label>
-      <input id="email" type="text" placeholder="Enter Email" name="email" [(ngModel)]="empl.email" required autocomplete="off" />
+  <form id="login-form" class="border border-white">
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input id="email" type="email" placeholder="Email" class="form-control" name="email" [(ngModel)]="empl.email" required autofocus autocomplete="off">
+    </div>
+    <div class="form-group">
       <label for="password">Password</label>
-      <input id="password" type="password" placeholder="Enter Password" name="password" [(ngModel)]="empl.password" required />
-      <p class="alert alert-danger" *ngIf="failed"><strong>Wrong Email/Password!</strong></p>
-      <button class="btn btn-primary" type="submit" (click)="login()" (keyup.enter)="login()" [disabled]="!(empl.email && empl.password)">Login</button>
-  </form>  
+      <input id="password" type="password" placeholder="Password" name="password" [(ngModel)]="empl.password" class="form-control" required>
+    </div>
+    <p class="alert alert-danger" *ngIf="failed"><strong>Wrong Email or Password<span (click)="hideMessage()">X</span></strong></p>
+    <div class="text text-center">
+      <button class="btn btn-outline-dark btn-lg" type="submit" (click)="login()" (keyup.enter)="login()" [disabled]="!(empl.email && empl.password)">Login</button>
+    </div>
+  </form>
 </div>
