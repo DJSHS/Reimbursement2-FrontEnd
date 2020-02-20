@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { MyReimbursementComponent } from './components/my-reimbursement/my-reimbursement.component';
 import { AllReimbursementComponent } from './components/all-reimbursement/all-reimbursement.component';
 import { NewReimbursementComponent } from './components/new-reimbursement/new-reimbursement.component';
 import { NewEmployeeComponent } from './components/new-employee/new-employee.component';
@@ -25,7 +24,6 @@ import { EmployeeComponent } from './components/employee/employee.component';
     NavbarComponent,
     HomeComponent,
     ProfileComponent,
-    MyReimbursementComponent,
     AllReimbursementComponent,
     NewReimbursementComponent,
     NewEmployeeComponent,

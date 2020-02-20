@@ -1,12 +1,13 @@
 <div>
   <form id="login-form" class="border border-white">
     <div class="form-group">
-      <label for="email">Email Address</label>
-      <input id="email" type="email" placeholder="Email" class="form-control" name="email" [(ngModel)]="empl.email" required autofocus autocomplete="off">
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="Enter Email" class="form-control" name="email" [(ngModel)]="empl.email" required autofocus autocomplete="off">
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input id="password" type="password" placeholder="Password" name="password" [(ngModel)]="empl.password" class="form-control" required>
+      <input id="password" type="{{showPass ? 'text' : 'password'}}" placeholder="Enter Password" name="password" [(ngModel)]="empl.password" class="form-control" required>
+      <p id="togglePass" (click)="toggle()">{{showPass ? 'Hide' : 'Show'}}</p>
     </div>
     <p class="alert alert-danger" *ngIf="failed"><strong>Wrong Email or Password<span (click)="hideMessage()">X</span></strong></p>
     <div class="text text-center">

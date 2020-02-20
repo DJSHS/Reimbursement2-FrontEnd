@@ -1,1 +1,42 @@
-<p>all-employee works!</p>
+<div *ngIf="!allEmpls.length">
+    <p class="display-4 text-center text-secondary">No Employee Found</p>
+</div>
+<div *ngIf="allEmpls.length" id="empl-table">
+    <p class="display-4">All Employees</p>
+    <div id="input-field" class="input-group text text-right">
+        <input type="text" placeholder="Search Employee">
+        <select (change)="filterByDept($event)">
+            <option disabled hidden selected value> -- Filter By Department -- </option>
+            <option *ngFor="let dept of allDepts" [value]="dept.deptId">{{dept.deptName}}</option>
+        </select>
+        <button type="button" class="btn btn-sm btn-outline-info" (click)="showAllEmpls()">All Employees</button>
+        <button type="button" class="btn btn-sm btn-outline-success" (click)="addEmpl()">+New</button>
+    </div>
+    <div *ngIf="noEmplFound" class="alert alert-danger">No Employee Found<strong (click)="hideMessage()">X</strong></div>
+    <br>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" (click)="orderById()">Id ⇳</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col" (click)="orderByDept()">Department ⇳</th>
+            <th scope="col">Position</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let empl of allEmpls">
+            <td>{{empl.emplId}}</td>
+            <td>{{empl.firstName}}</td>
+            <td>{{empl.lastName}}</td>
+            <td>{{empl.email}}</td>
+            <td>{{empl.phone}}</td>
+            <td>{{empl.deptId}}</td>
+            <td>{{empl.position}}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+</div>

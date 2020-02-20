@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
 
   empl: Employee = new Employee();
   failed: boolean = false;
+  showPass: boolean = false;
 
   constructor(private router: Router, private authService: AuthService) { }
 
@@ -34,5 +35,9 @@ export class LoginComponent implements OnInit {
 
   hideMessage() {
     this.failed = false;
+  }
+
+  toggle() {
+    this.showPass = !this.showPass;
   }
 }

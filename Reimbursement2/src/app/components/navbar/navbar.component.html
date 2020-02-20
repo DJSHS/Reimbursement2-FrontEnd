@@ -9,19 +9,19 @@
         <a class="nav-link" routerLink="home">Home</a>
     </li>
     <li class="nav-item" *ngIf="authService.empl && authService.empl.isManager">
-        <a class="nav-link" routerLink="employees">All Employees</a>
+        <a class="nav-link" routerLink="employees/all">All Employees</a>
     </li>
     <li class="nav-item" *ngIf="authService.empl && authService.empl.isManager">
-        <a class="nav-link" routerLink="reimbursements">All Reimbursements</a>
+        <a class="nav-link" routerLink="reimbursements/all">All Reimbursements</a>
     </li>
     <li class="nav-item" *ngIf="authService.empl  && authService.empl.managerId">
         <a class="nav-link" routerLink="new/reimbursement">New Reimbursement</a>
     </li>
     <li class="nav-item" *ngIf="authService.empl">
-        <a class="nav-link" routerLink="my/reimbursements">My Reimbursement</a>
+        <a class="nav-link" routerLink="my/reimbursements/pending">My Reimbursement</a>
     </li>
     <li class="nav-item" *ngIf="authService.empl">
-        <a class="nav-link" routerLink="profile">Profile</a>
+        <a class="nav-link" routerLink="my/profile">Profile</a>
     </li>
     <li class="nav-item" *ngIf="authService.empl">
         <a class="nav-link" (click)="logout()">Log Out</a>
