@@ -1,8 +1,12 @@
 <div id="reim-table">
     <p class="display-4">All {{reimType === 'pending' ? 'Pending' : 'Resolved'}} Reimbursements</p>
     <div id="input-field" class="input-group text text-right">
-        <button type="button" class="btn btn-outline-secondary" (click)="fetchReims()">All {{reimType === 'pending' ? 'Resolved' : 'Pending'}} Reimbursement</button>
-        <input type="text" placeholder="Search Employee" [(ngModel)]="searchName" (ngModelChange)="searchEmpl()" class="form-control">
+        <button type="button" class="btn btn-outline-secondary" (click)="fetchReims()">View All {{reimType === 'pending' ? 'Resolved' : 'Pending'}} Reimbursements</button>
+        <span class="input-group-text date">Submited From</span>
+        <input class="input-control" id="fromDate" type="date" class="form-control" [(ngModel)]="fromDate" (ngModelChange)="filterByDate()">
+        <span class="input-group-text date">To</span>
+        <input class="input-control" id="toDate" type="date" class="form-control" [(ngModel)]="toDate" (ngModelChange)="filterByDate()">
+        <input type="text" placeholder="Search By Employee" [(ngModel)]="searchName" (ngModelChange)="searchEmpl()" class="form-control">
         <select *ngIf="reimType === 'resolved'" (change)="filterByResult($event)" class="custom-select custom-select">
             <option selected value="All">All</option>
             <option value="Approved">Approved</option>

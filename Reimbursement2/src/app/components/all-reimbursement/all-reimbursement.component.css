@@ -23,3 +23,15 @@ select {
 .sortable:hover {
     background-color: lightgray;
 }
+
+#toDate, #fromDate {
+    max-width: 15%;
+}
+
+#toDate {
+    margin-right: 1%;
+}
+
+.date {
+    height: 38px;
+}

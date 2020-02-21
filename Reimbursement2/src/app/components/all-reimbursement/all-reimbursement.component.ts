@@ -17,6 +17,8 @@ export class AllReimbursementComponent implements OnInit {
 
   reimType: string = 'pending';
   searchName: string = '';
+  fromDate: string = '';
+  toDate: string = '';
 
   orderSubmitDate: boolean = false;
   orderResolvedDate: boolean = false;
@@ -26,12 +28,11 @@ export class AllReimbursementComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService, private reimService: ReimbursementService, private emplService: EmployeeService) { }
 
   ngOnInit() {
-    // if (!this.authService.empl) {
-    //   this.router.navigate(['login']);
-    // } else {
-    //   this.getAllPendingReims();
-    // }
-    this.getAllPendingReims();
+    if (!this.authService.empl) {
+      this.router.navigate(['login']);
+    } else {
+      this.getAllPendingReims();
+    }
   }
 
   getAllPendingReims() {
@@ -124,6 +125,18 @@ export class AllReimbursementComponent implements OnInit {
       this.reims = this.allReims;
     } else {
       this.reims = this.allReims.filter(r => r.result == event.target.value);
+    }
+  }
+
+  filterByDate() {
+    if (this.fromDate && this.toDate) {
+      this.reims = this.allReims.filter(r => r.submitDate >= this.fromDate && r.submitDate < this.toDate);
+    } else if (this.fromDate) {
+      this.reims = this.allReims.filter(r => r.submitDate >= this.fromDate);
+    } else if (this.toDate) {
+      this.reims = this.allReims.filter(r => r.submitDate <= this.toDate);
+    } else {
+      this.reims = this.allReims;
     }
   }
 }
