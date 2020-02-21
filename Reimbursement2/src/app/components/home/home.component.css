@@ -28,3 +28,7 @@ strong:hover {
     text-decoration: underline solid red;
     cursor: pointer;
 }
+
+#contact {
+    font-family: Arial, Helvetica, sans-serif;
+}

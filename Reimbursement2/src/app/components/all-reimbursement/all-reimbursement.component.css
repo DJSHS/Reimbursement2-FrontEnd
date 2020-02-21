@@ -35,3 +35,7 @@ select {
 .date {
     height: 38px;
 }
+
+tbody tr {
+    cursor: pointer;
+}

@@ -1,1 +1,80 @@
-<p>reimbursement works!</p>
+<div *ngIf="currentReim.reimId && currentEmpl.emplId && currentDept.deptId" id="current-reim">
+	<p class="display-4">Reimbursement</p>
+	<div *ngIf="!currentReim.result">
+		<table class="table table-hover">
+			<tr>
+				<th scope="col">Id</th>
+					<td>{{currentReim.reimId}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Amount</th>
+					<td>${{currentReim.amount}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Status</th>
+					<td>{{currentReim.status | titlecase}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Submit By</th>
+					<td [ngClass]="authService.empl && authService.empl.isManager ? 'clickable' : ''" (click)="redirectToEmpl()">{{currentEmpl.firstName | titlecase}} {{currentEmpl.lastName | titlecase}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Department</th>
+					<td>{{currentDept.deptName}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Submit At</th>
+					<td>{{currentReim.submitDate}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Description</th>
+					<td>{{currentReim.description}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Image</th>
+					<td>{{currentReim.receipt ? currentReim.receipt : 'N/A'}}</td>
+			</tr>
+		</table>
+		<div id="button-field">
+			<button type="button" id="restore-btn" (click)="restore()" class="btn btn-outline-info">Restore</button>
+			<button type="button" id="update-btn" (click)="update()" class="btn btn-outline-primary">Update</button>
+			<button type="button" id="delete-btn" (click)="delete()" class="btn btn-outline-secondary">Delete</button>
+		</div>
+	</div>
+	<div *ngIf="currentReim.result">
+		<table class="table table-hover">
+			<tr>
+				<th scope="col">Id</th>
+					<td>{{currentReim.reimId}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Amount</th>
+					<td>${{currentReim.amount}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Status</th>
+					<td>{{currentReim.status | titlecase}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Submit By</th>
+					<td [ngClass]="authService.empl && authService.empl.isManager ? 'clickable' : ''" (click)="redirectToEmpl()">{{currentEmpl.firstName | titlecase}} {{currentEmpl.lastName | titlecase}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Department</th>
+					<td>{{currentDept.deptName}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Submit At</th>
+					<td>{{currentReim.submitDate}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Description</th>
+					<td>{{currentReim.description}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Image</th>
+					<td>{{currentReim.receipt ? currentReim.receipt : 'N/A'}}</td>
+			</tr>
+		</table>
+	</div>
+</div>

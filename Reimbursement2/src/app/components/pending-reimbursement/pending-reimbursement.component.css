@@ -10,3 +10,7 @@ button {
 #get-resolved {
     float: right;
 }
+
+tbody tr {
+    cursor: pointer;
+}
