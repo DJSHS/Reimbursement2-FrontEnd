@@ -16,6 +16,14 @@ export class ReimbursementService {
 		return this.http.get<Reimbursement[]>(this.url);
   }
 
+  getAllPendingReimbursement() {
+    return this.http.get<Reimbursement[]>(this.url+'pending');
+  }
+
+  getAllResolvedReimbursement() {
+    return this.http.get<Reimbursement[]>(this.url+'resolved');
+  }
+
   getReimbursementById(idParm: number) {
     return this.http.get<Reimbursement[]>(this.url+idParm);
   }

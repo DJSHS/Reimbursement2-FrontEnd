@@ -1,4 +1,24 @@
-empl-table {
+#empl-table {
     margin-left: 5%;
     margin-right: 5%;
+}
+
+.sortable {
+    cursor: pointer;
+}
+
+.sortable:hover {
+    background-color: lightgray;
+}
+
+table {
+    margin-top: 10px;
+}
+
+tbody tr {
+    cursor: pointer;
+}
+
+#new-empl-btn {
+    margin-left: 800px;
 }

@@ -1,1 +1,30 @@
-<p>resolved-reimbursement works!</p>
+<div *ngIf="!resolvedReims.length" class="text-center">
+    <p class="display-4 text-secondary">No Resolved Reimbursement</p>
+    <button type="button" class="btn btn-outline-secondary" routerLink="/my/reimbursements/pending">My Pending Reimbursement</button>
+</div>
+<div id="resolved-table" *ngIf="resolvedReims.length">
+    <p class="display-4">My Resolved Reimbursement</p>
+    <button type="button" class="btn btn-outline-secondary" routerLink="/my/reimbursements/pending">Pending Reimbursement</button>
+    <table class="table table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Submit At</th>
+            <th scope="col">Status</th>
+            <th scope="col">Result</th>
+            <th scope="col">Resolved At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reim of resolvedReims" routerLink="/reimbursements/{{reim.reimId}}">
+            <td>{{reim.reimId}}</td>
+            <td>${{reim.amount}}</td>
+            <td>{{reim.submitDate}}</td>
+            <td>{{reim.status}}</td>
+            <td>{{reim.result}}</td>
+            <td>{{reim.resolvedDate}}</td>
+          </tr>
+        </tbody>
+    </table>
+</div>
