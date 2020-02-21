@@ -47,6 +47,7 @@ export class AllEmployeeComponent implements OnInit {
       data => {
         this.allEmpls = data.sort((a, b) => b.isManager - a.isManager);
         this.empls = this.allEmpls;
+
       }, error => {
         console.warn(error);
       }

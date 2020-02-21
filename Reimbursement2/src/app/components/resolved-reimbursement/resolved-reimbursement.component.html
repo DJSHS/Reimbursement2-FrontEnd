@@ -1,10 +1,17 @@
-<div *ngIf="!resolvedReims.length" class="text-center">
+<div *ngIf="!allResolvedReims.length" class="text-center">
     <p class="display-4 text-secondary">No Resolved Reimbursement</p>
     <button type="button" class="btn btn-outline-secondary" routerLink="/my/reimbursements/pending">My Pending Reimbursement</button>
 </div>
-<div id="resolved-table" *ngIf="resolvedReims.length">
+<div id="resolved-table" *ngIf="allResolvedReims.length">
     <p class="display-4">My Resolved Reimbursement</p>
-    <button type="button" class="btn btn-outline-secondary" routerLink="/my/reimbursements/pending">Pending Reimbursement</button>
+    <div id="input-field" class="input-group text text-right">
+      <select (change)="filterByResult($event)" class="custom-select custom-select">
+        <option selected value="All">All</option>
+        <option value="Approved">Approved</option>
+        <option value="Denied">Denied</option>
+      </select>
+      <button id="get-pending" type="button" class="btn btn-outline-secondary" routerLink="/my/reimbursements/pending">Pending Reimbursement</button>
+    </div>
     <table class="table table-hover">
         <thead class="thead-light">
           <tr>

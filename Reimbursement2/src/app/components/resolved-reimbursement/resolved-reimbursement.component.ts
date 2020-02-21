@@ -11,6 +11,7 @@ import { Reimbursement } from 'src/app/models/reimbursement';
 })
 export class ResolvedReimbursementComponent implements OnInit {
 
+  allResolvedReims: Reimbursement[] = [];
   resolvedReims: Reimbursement[] = [];
 
   constructor(private reimService: ReimbursementService, private router: Router, private authService: AuthService) { }
@@ -26,10 +27,19 @@ export class ResolvedReimbursementComponent implements OnInit {
   getAllResolvedReims() {
     this.reimService.getResolvedReimbursementsByEmplId(this.authService.empl.emplId).subscribe(
       data => {
-        this.resolvedReims = data;
+        this.allResolvedReims = data;
+        this.resolvedReims = this.allResolvedReims;
     }, error => {
       console.warn(error);
     })
+  }
+
+  filterByResult(event) {
+    if (event.target.value === 'All') {
+      this.resolvedReims = this.allResolvedReims;
+    } else {
+      this.resolvedReims = this.allResolvedReims.filter(r => r.result == event.target.value);
+    }
   }
 
 }

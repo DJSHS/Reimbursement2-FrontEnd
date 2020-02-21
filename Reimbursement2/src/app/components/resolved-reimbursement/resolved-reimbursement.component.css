@@ -6,3 +6,12 @@
 button {
     margin-bottom: 10px;
 }
+
+select {
+    max-width: 130px;
+    margin-right: 1%;
+}
+
+#input-field {
+    margin-left: 75%;
+}

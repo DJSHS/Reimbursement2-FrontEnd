@@ -1,1 +1,60 @@
-<p>all-reimbursement works!</p>
+<div id="reim-table">
+    <p class="display-4">All {{reimType === 'pending' ? 'Pending' : 'Resolved'}} Reimbursements</p>
+    <div id="input-field" class="input-group text text-right">
+        <button type="button" class="btn btn-outline-secondary" (click)="fetchReims()">All {{reimType === 'pending' ? 'Resolved' : 'Pending'}} Reimbursement</button>
+        <input type="text" placeholder="Search Employee" [(ngModel)]="searchName" (ngModelChange)="searchEmpl()" class="form-control">
+        <select *ngIf="reimType === 'resolved'" (change)="filterByResult($event)" class="custom-select custom-select">
+            <option selected value="All">All</option>
+            <option value="Approved">Approved</option>
+            <option value="Denied">Denied</option>
+        </select>
+    </div>
+    <div *ngIf="fetchComplete && reimType === 'pending'">
+        <table class="table table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col" (click)="orderByAmount()" class="sortable">Amount ⇳</th>
+                <th scope="col">Submit By</th>
+                <th scope="col" (click)="orderBySubmitDate()" class="sortable">Submit At ⇳</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let reim of reims" routerLink="/reimbursements/{{reim.reimId}}">
+                <td>{{reim.reimId}}</td>
+                <td>${{reim.amount}}</td>
+                <td>{{reim.employee.firstName | titlecase}} {{reim.employee.lastName | titlecase}}</td>
+                <td>{{reim.submitDate}}</td>
+                <td>{{reim.status | titlecase}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="fetchComplete && reimType === 'resolved'">
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col" (click)="orderByAmount()" class="sortable">Amount ⇳</th>
+                    <th scope="col">Submit By</th>
+                    <th scope="col" (click)="orderBySubmitDate()" class="sortable">Submit At ⇳</th>
+                    <th scope="col" (click)="orderByResolvedDate()" class="sortable">Resolved At ⇳</th>
+                    <th scope="col">Result</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reim of reims" routerLink="/reimbursements/{{reim.reimId}}">
+                    <td>{{reim.reimId}}</td>
+                    <td>${{reim.amount}}</td>
+                    <td>{{reim.employee.firstName | titlecase}} {{reim.employee.lastName | titlecase}}</td>
+                    <td>{{reim.submitDate}}</td>
+                    <td>{{reim.resolvedDate}}</td>
+                    <td>{{reim.result}}</td>
+                    <td>{{reim.status | titlecase}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

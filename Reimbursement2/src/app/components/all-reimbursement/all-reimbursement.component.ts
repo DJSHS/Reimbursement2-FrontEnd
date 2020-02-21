@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ReimbursementService } from 'src/app/services/reimbursement-service/reimbursement.service';
 import { EmployeeService } from 'src/app/services/employee-service/employee.service';
-import { DepartmentService } from 'src/app/services/department-service/department.service';
 import { Reimbursement } from 'src/app/models/reimbursement';
 
 @Component({
@@ -13,11 +12,18 @@ import { Reimbursement } from 'src/app/models/reimbursement';
 })
 export class AllReimbursementComponent implements OnInit {
 
-  allPendingReims: Reimbursement[] = [];
-  allResolvedReims: Reimbursement[] = [];
   allReims: Reimbursement[] = [];
+  reims: Reimbursement[] = [];
 
-  constructor(private router: Router, private authService: AuthService, private reimService: ReimbursementService, private emplService: EmployeeService, private deptService: DepartmentService) { }
+  reimType: string = 'pending';
+  searchName: string = '';
+
+  orderSubmitDate: boolean = false;
+  orderResolvedDate: boolean = false;
+  orderAmount: boolean = false;
+  fetchComplete: boolean = false;
+
+  constructor(private router: Router, private authService: AuthService, private reimService: ReimbursementService, private emplService: EmployeeService) { }
 
   ngOnInit() {
     // if (!this.authService.empl) {
@@ -29,10 +35,12 @@ export class AllReimbursementComponent implements OnInit {
   }
 
   getAllPendingReims() {
+    this.fetchComplete = false;
     this.reimService.getAllPendingReimbursement().subscribe(
       data => {
-        this.allPendingReims = data;
-        console.log(this.allPendingReims);
+        this.allReims = data;
+        this.reims = this.allReims;
+        this.getEmplForReim();
       }
     ), error => {
       console.warn(error);
@@ -40,24 +48,82 @@ export class AllReimbursementComponent implements OnInit {
   }
 
   getAllResolvedReims() {
+    this.fetchComplete = false;
     this.reimService.getAllResolvedReimbursement().subscribe(
       data => {
-        this.allResolvedReims = data;
-        console.log(this.allResolvedReims);
+        this.allReims = data.sort((a, b) => b.reimId - a.reimId);
+        this.reims = this.allReims;
+        this.getEmplForReim();
       }
     ), error => {
       console.warn(error);
     }
   }
 
-  getAllReims() {
-    this.reimService.getAllReimbursements().subscribe(
-      data => {
-        this.allReims = data;
-        console.log(this.allReims);
-      }
-    ), error => {
-      console.warn(error);
+  fetchReims() {
+    if (this.reimType === 'pending') {
+      this.reimType = 'resolved';
+      this.getAllResolvedReims();
+    } else {
+      this.reimType = 'pending';
+      this.getAllPendingReims();
+    }
+  }
+
+  getEmplForReim() {
+    let count = 0;
+
+    this.reims.forEach(r => {
+      this.emplService.getEmployeeById(r.submitById).subscribe(
+        data => {
+          r.employee = data;
+          count++;
+          if (count === this.reims.length) {
+            this.fetchComplete = true;
+          }
+        }, error => {
+          console.warn(error);
+        }
+      )
+    })
+  }
+
+  searchEmpl() {
+    this.reims = this.allReims.filter(r => `${r.employee.firstName} ${r.employee.lastName}`.toLowerCase().includes(this.searchName.toLowerCase()));
+  }
+
+  orderBySubmitDate() {
+    if (!this.orderSubmitDate) {
+      this.reims.sort((a, b) => a.submitDate > b.submitDate ? -1 : 1);
+    } else {
+      this.reims.sort((a, b) => a.submitDate > b.submitDate ? 1 : -1);
+    }
+    this.orderSubmitDate = !this.orderSubmitDate;
+  }
+
+  orderByResolvedDate() {
+    if (!this.orderResolvedDate) {
+      this.reims.sort((a, b) => a.resolvedDate > b.resolvedDate ? -1 : 1);
+    } else {
+      this.reims.sort((a, b) => a.resolvedDate > b.resolvedDate ? 1 : -1);
+    }
+    this.orderResolvedDate = !this.orderResolvedDate;
+  }
+
+  orderByAmount() {
+    if (!this.orderAmount) {
+      this.reims.sort((a, b) => a.amount > b.amount ? -1 : 1);
+    } else {
+      this.reims.sort((a, b) => a.amount > b.amount ? 1 : -1);
+    }
+    this.orderAmount = !this.orderAmount;
+  }
+
+  filterByResult(event) {
+    if (event.target.value === 'All') {
+      this.reims = this.allReims;
+    } else {
+      this.reims = this.allReims.filter(r => r.result == event.target.value);
     }
   }
 }

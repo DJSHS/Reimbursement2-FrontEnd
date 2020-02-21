@@ -1,3 +1,5 @@
+import { Department } from './department';
+
 export class Employee {
     emplId: number;
     firstName: string ;
@@ -10,4 +12,5 @@ export class Employee {
     isManager: number;
     deptId: number;
     position: string;
+    department: Department = new Department();
 };

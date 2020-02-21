@@ -6,3 +6,7 @@
 button {
     margin-bottom: 10px;
 }
+
+#get-resolved {
+    float: right;
+}

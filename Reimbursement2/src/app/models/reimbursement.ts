@@ -1,3 +1,5 @@
+import { Employee } from './employee';
+
 export class Reimbursement {
     reimId: number;
     amount: number;
@@ -10,4 +12,5 @@ export class Reimbursement {
     description: string;
     reason: string;
     receipt: string;
+    employee: Employee = new Employee();
 }

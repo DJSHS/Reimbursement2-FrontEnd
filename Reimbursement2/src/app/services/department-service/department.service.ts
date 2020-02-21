@@ -15,4 +15,8 @@ export class DepartmentService {
   getAllDepts() {
     return this.http.get<Department[]>(this.url);
   }
+
+  getDeptById(idParm: number) {
+    return this.http.get<Department>(this.url+idParm);
+  }
 }

@@ -25,7 +25,7 @@ export class ReimbursementService {
   }
 
   getReimbursementById(idParm: number) {
-    return this.http.get<Reimbursement[]>(this.url+idParm);
+    return this.http.get<Reimbursement>(this.url+idParm);
   }
   
   getAllReimbursementsByEmplId(idParm: number) {

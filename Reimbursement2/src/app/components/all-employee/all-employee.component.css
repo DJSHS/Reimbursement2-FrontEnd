@@ -3,6 +3,11 @@
     margin-right: 5%;
 }
 
+input, select {
+    margin-right: 1%;
+    max-width: 250px;
+}
+
 .sortable {
     cursor: pointer;
 }
@@ -20,5 +25,5 @@ tbody tr {
 }
 
 #new-empl-btn {
-    margin-left: 800px;
+    margin-left: 670px;
 }
