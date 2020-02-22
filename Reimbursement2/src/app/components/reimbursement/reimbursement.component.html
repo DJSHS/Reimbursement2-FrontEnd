@@ -1,79 +1,99 @@
 <div *ngIf="currentReim.reimId && currentEmpl.emplId && currentDept.deptId" id="current-reim">
-	<p class="display-4">Reimbursement</p>
+	<p class="display-4">Reimbursement Detail</p>
 	<div *ngIf="!currentReim.result">
 		<table class="table table-hover">
 			<tr>
 				<th scope="col">Id</th>
-					<td>{{currentReim.reimId}}</td>
+				<td>{{currentReim.reimId}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Amount</th>
-					<td>${{currentReim.amount}}</td>
+				<td>${{currentReim.amount}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Status</th>
-					<td>{{currentReim.status | titlecase}}</td>
+				<td>{{currentReim.status | titlecase}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Submit By</th>
-					<td [ngClass]="authService.empl && authService.empl.isManager ? 'clickable' : ''" (click)="redirectToEmpl()">{{currentEmpl.firstName | titlecase}} {{currentEmpl.lastName | titlecase}}</td>
+				<td [ngClass]="authService.empl.isManager ? 'clickable' : ''" (click)="redirectToEmpl()">{{currentEmpl.firstName | titlecase}} {{currentEmpl.lastName | titlecase}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Department</th>
-					<td>{{currentDept.deptName}}</td>
+				<td>{{currentDept.deptName}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Submit At</th>
-					<td>{{currentReim.submitDate}}</td>
+				<td>{{currentReim.submitDate}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Description</th>
-					<td>{{currentReim.description}}</td>
+				<td>{{currentReim.description}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Image</th>
-					<td>{{currentReim.receipt ? currentReim.receipt : 'N/A'}}</td>
+				<td>{{currentReim.receipt ? currentReim.receipt : 'N/A'}}</td>
 			</tr>
 		</table>
-		<div id="button-field">
+		<div *ngIf="authService.empl.isManager && authService.empl.isManager > currentEmpl.isManager" class="text text-center">
+			<button type="button" (click)="resolveReim('Approved')" class="btn btn-outline-primary">Approve</button>
+			<button type="button" (click)="resolveReim('Denied')" class="btn btn-outline-primary">Deny</button>
+		</div>
+		<div id="button-field" *ngIf="authService.empl.emplId === currentReim.submitById">
 			<button type="button" id="restore-btn" (click)="restore()" class="btn btn-outline-info">Restore</button>
 			<button type="button" id="update-btn" (click)="update()" class="btn btn-outline-primary">Update</button>
 			<button type="button" id="delete-btn" (click)="delete()" class="btn btn-outline-secondary">Delete</button>
 		</div>
 	</div>
-	<div *ngIf="currentReim.result">
+	<div *ngIf="currentReim.result && resolvedByEmpl.emplId">
 		<table class="table table-hover">
 			<tr>
 				<th scope="col">Id</th>
-					<td>{{currentReim.reimId}}</td>
+				<td>{{currentReim.reimId}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Amount</th>
-					<td>${{currentReim.amount}}</td>
+				<td>${{currentReim.amount}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Status</th>
-					<td>{{currentReim.status | titlecase}}</td>
+				<td>{{currentReim.status | titlecase}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Result</th>
+				<td>{{currentReim.result}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Submit By</th>
-					<td [ngClass]="authService.empl && authService.empl.isManager ? 'clickable' : ''" (click)="redirectToEmpl()">{{currentEmpl.firstName | titlecase}} {{currentEmpl.lastName | titlecase}}</td>
+				<td [ngClass]="authService.empl.isManager ? 'clickable' : ''" (click)="redirectToEmpl()">{{currentEmpl.firstName | titlecase}} {{currentEmpl.lastName | titlecase}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Department</th>
-					<td>{{currentDept.deptName}}</td>
+				<td>{{currentDept.deptName}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Submit At</th>
-					<td>{{currentReim.submitDate}}</td>
+				<td>{{currentReim.submitDate}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Resolved By</th>
+				<td [ngClass]="authService.empl.isManager ? 'clickable' : ''" (click)="redirectToEmpl('resolved')">{{resolvedByEmpl.firstName | titlecase}} {{resolvedByEmpl.lastName | titlecase}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Resolved At</th>
+				<td>{{currentReim.resolvedDate}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Description</th>
-					<td>{{currentReim.description}}</td>
+				<td>{{currentReim.description}}</td>
+			</tr>
+			<tr>
+				<th scope="col">Reason</th>
+				<td>{{currentReim.reason}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Image</th>
-					<td>{{currentReim.receipt ? currentReim.receipt : 'N/A'}}</td>
+				<td>{{currentReim.receipt ? currentReim.receipt : 'N/A'}}</td>
 			</tr>
 		</table>
 	</div>

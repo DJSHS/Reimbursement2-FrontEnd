@@ -18,48 +18,50 @@ export class ReimbursementComponent implements OnInit {
   currentReim: Reimbursement = new Reimbursement();
   currentEmpl: Employee = new Employee();
   currentDept: Department = new Department();
+  resolvedByEmpl: Employee = new Employee();
 
   constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private reimService: ReimbursementService, private emplService: EmployeeService, private deptService: DepartmentService) { }
 
   ngOnInit() {
-    // if (!this.authService.empl) {
-    //   this.router.navigate(['login']);
-    // } else {
-    //   this.route.params.subscribe(param => {
-    //     this.currentReim.reimId = param['id'];
-    //     this.getCurrentReim(this.currentReim.reimId);
-    //   })
-    // }
-    this.route.params.subscribe(param => {
-      this.currentReim.reimId = param['id'];
-      this.getCurrentReim(this.currentReim.reimId);
-    })
+    if (!this.authService.empl) {
+      this.router.navigate(['login']);
+    } else {
+      this.route.params.subscribe(param => {
+        this.currentReim.reimId = param['id'];
+        this.getCurrentReim(this.currentReim.reimId);
+      })
+    }
   }
 
   getCurrentReim(reimId) {
     this.reimService.getReimbursementById(reimId).subscribe(
       data => {
-        // if (!data.reimId) {
-        //   this.router.navigate(['home']);
-        // } else if (data.submitById !== this.authService.empl.emplId && !this.authService.empl.isManager) {
-        //   this.router.navigate(['home']);
-        // } else {
-        //   this.currentReim = data;
-        //   this.getCurrentEmpl(this.currentReim.submitById);
-        // }
-        this.currentReim = data;
-        this.getCurrentEmpl(this.currentReim.submitById);
+        if (!data.reimId) {
+          this.router.navigate(['home']);
+        } else if (data.submitById !== this.authService.empl.emplId && !this.authService.empl.isManager) {
+          this.router.navigate(['home']);
+        } else {
+          this.currentReim = data;
+          this.getCurrentEmpl(this.currentReim.submitById);
+          if (this.currentReim.resolvedById) {
+            this.getCurrentEmpl(this.currentReim.resolvedById, true);
+          }
+        }
       }, error => {
         console.warn(error);
       }
     )
   }
 
-  getCurrentEmpl(emplId) {
+  getCurrentEmpl(emplId, getResolvedInfo: boolean = false) {
     this.emplService.getEmployeeById(emplId).subscribe(
       data => {
-        this.currentEmpl = data;
-        this.getCurrentDept(this.currentEmpl.deptId);
+        if (!getResolvedInfo) {
+          this.currentEmpl = data;
+          this.getCurrentDept(this.currentEmpl.deptId);
+        } else {
+          this.resolvedByEmpl = data;
+        }
       }, error => {
         console.warn(error);
       }
@@ -84,13 +86,17 @@ export class ReimbursementComponent implements OnInit {
 
   }
 
+  resolveReim(result) {
+    console.log(result);
+  }
+
   delete() {
 
   }
 
-  redirectToEmpl() {
+  redirectToEmpl(e: string = 'pending') {
     if (this.authService.empl.isManager) {
-      this.router.navigate(['employees', this.currentReim.submitById]);
+      e === 'pending' ? this.router.navigate(['employees', this.currentReim.submitById]) : this.router.navigate(['employees', this.resolvedByEmpl.emplId]);
     }
   }
 }
