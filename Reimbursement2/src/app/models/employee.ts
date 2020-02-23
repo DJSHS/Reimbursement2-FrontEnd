@@ -12,5 +12,4 @@ export class Employee {
     isManager: number;
     deptId: number;
     position: string;
-    department: Department = new Department();
 };

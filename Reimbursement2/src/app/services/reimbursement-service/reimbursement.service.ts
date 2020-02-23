@@ -38,5 +38,17 @@ export class ReimbursementService {
   
   getResolvedReimbursementsByEmplId(idParm: number) {
 		return this.http.get<Reimbursement[]>(this.url+'employees/'+idParm+'/resolved');
-	}
+  }
+  
+  createReimbursement(reim: Reimbursement) {
+    return this.http.post(this.url, reim).toPromise();
+  }
+
+  updateReimbursement(reim: Reimbursement) {
+    return this.http.put(this.url+reim.reimId, reim).toPromise();
+  }
+
+  deleteReimbursement(idParm: number) {
+    return this.http.delete(this.url+idParm).toPromise();
+  }
 }

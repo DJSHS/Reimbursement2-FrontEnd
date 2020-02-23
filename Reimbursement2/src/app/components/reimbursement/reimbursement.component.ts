@@ -87,11 +87,31 @@ export class ReimbursementComponent implements OnInit {
   }
 
   resolveReim(result) {
-    console.log(result);
+    this.currentReim.result = result;
+    this.currentReim.status = 'resolved';
+    this.currentReim.resolvedById = this.authService.empl.emplId;
+    this.currentReim.resolvedDate = new Date().toISOString().slice(0, 10);
+    this.currentReim.reason = this.currentReim.reason ? this.currentReim.reason : '';
+
+    this.reimService.updateReimbursement(this.currentReim).then(
+      response => {
+        if (!response) {
+          this.getCurrentReim(this.currentReim.reimId);
+        }
+      }
+    )
   }
 
   delete() {
-
+    if (window.confirm('Delete the reimbursement?')) {
+      this.reimService.deleteReimbursement(this.currentReim.reimId).then(
+        response => {
+          if (!response) {
+            this.router.navigate(['/my/reimbursements/pending']);
+          }
+        }
+      )
+    }
   }
 
   redirectToEmpl(e: string = 'pending') {

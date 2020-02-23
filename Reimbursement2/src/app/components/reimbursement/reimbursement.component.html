@@ -36,12 +36,19 @@
 			</tr>
 		</table>
 		<div *ngIf="authService.empl.isManager && authService.empl.isManager > currentEmpl.isManager" class="text text-center">
+			<div class="input-group">
+				<div class="input-group-prepend">
+				  <span class="input-group-text">Reason</span>
+				</div>
+				<textarea class="form-control" aria-label="With textarea" placeholder="If deny" rows="2" name="reason" [(ngModel)]="currentReim.reason"></textarea>
+			</div><br>
 			<button type="button" (click)="resolveReim('Approved')" class="btn btn-outline-primary">Approve</button>
 			<button type="button" (click)="resolveReim('Denied')" class="btn btn-outline-primary">Deny</button>
+			<br>
 		</div>
-		<div id="button-field" *ngIf="authService.empl.emplId === currentReim.submitById">
-			<button type="button" id="restore-btn" (click)="restore()" class="btn btn-outline-info">Restore</button>
-			<button type="button" id="update-btn" (click)="update()" class="btn btn-outline-primary">Update</button>
+		<div id="button-field" *ngIf="authService.empl.emplId === currentReim.submitById" class="text text-center">
+			<button type="button" id="restore-btn" (click)="restore()" class="btn btn-outline-info">Cancel</button>
+			<button type="button" id="update-btn" (click)="update()" class="btn btn-outline-primary">Submit</button>
 			<button type="button" id="delete-btn" (click)="delete()" class="btn btn-outline-secondary">Delete</button>
 		</div>
 	</div>
@@ -89,11 +96,11 @@
 			</tr>
 			<tr>
 				<th scope="col">Reason</th>
-				<td>{{currentReim.reason}}</td>
+				<td>{{currentReim.reason ? currentReim.reason : ''}}</td>
 			</tr>
 			<tr>
 				<th scope="col">Image</th>
-				<td>{{currentReim.receipt ? currentReim.receipt : 'N/A'}}</td>
+				<td>{{currentReim.receipt ? currentReim.receipt : ''}}</td>
 			</tr>
 		</table>
 	</div>

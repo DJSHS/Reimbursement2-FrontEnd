@@ -1,7 +1,7 @@
 <div id="reim-table">
     <p class="display-4">All {{reimType === 'pending' ? 'Pending' : 'Resolved'}} Reimbursements</p>
     <div id="input-field" class="input-group text text-right">
-        <button type="button" class="btn btn-outline-secondary" (click)="fetchReims()">View All {{reimType === 'pending' ? 'Resolved' : 'Pending'}} Reimbursements</button>
+        <button type="button" class="btn btn-outline-info" (click)="fetchReims()">View All {{reimType === 'pending' ? 'Resolved' : 'Pending'}} Reimbursements</button>
         <span class="input-group-text date">Submited From</span>
         <input class="input-control" id="fromDate" type="date" class="form-control" [(ngModel)]="fromDate" (ngModelChange)="filterByDate()">
         <span class="input-group-text date">To</span>
