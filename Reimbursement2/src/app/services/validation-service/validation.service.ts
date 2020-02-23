@@ -19,6 +19,10 @@ export class ValidationService {
 		return /^\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$/.test(phone);
   }
 
+  validatePassword(password: string) {
+    return password.length > 7 && password.length < 17;
+  }
+
   nameFormat(name: string) {
 		return name[0].toUpperCase() + name.slice(1).toLowerCase();
   }

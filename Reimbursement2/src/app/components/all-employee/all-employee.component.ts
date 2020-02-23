@@ -27,7 +27,7 @@ export class AllEmployeeComponent implements OnInit {
   constructor(private authService: AuthService, private emplService: EmployeeService, private router: Router, private deptService: DepartmentService) { }
 
   ngOnInit() {
-    if (!this.authService.empl) {
+    if (!this.authService.empl && !this.authService.empl.isManager) {
       this.router.navigate(["login"])
     } else {
       this.getAllEmplsAndDepts();

@@ -36,7 +36,7 @@ export class ReimbursementComponent implements OnInit {
   getCurrentReim(reimId) {
     this.reimService.getReimbursementById(reimId).subscribe(
       data => {
-        if (!data.reimId) {
+        if (!data) {
           this.router.navigate(['home']);
         } else if (data.submitById !== this.authService.empl.emplId && !this.authService.empl.isManager) {
           this.router.navigate(['home']);

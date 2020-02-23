@@ -19,4 +19,28 @@ export class EmployeeService {
   getEmployeeById(idParm: number) {
     return this.http.get<Employee>(this.url+idParm);
   }
+
+  createEmployee(empl: Employee) {
+    return this.http.post(this.url, empl).toPromise();
+  }
+
+  updateEmployee(empl: Employee) {
+    return this.http.put(this.url+empl.emplId, empl).toPromise();
+  }
+
+  deleteEmployee(idParm: number) {
+    return this.http.delete(this.url+idParm).toPromise();
+  }
+
+  checkUniquenessForEmail(email: string) {
+    let empl = new Employee();
+    empl.email = email;
+    return this.http.post(this.url+'email', empl).toPromise();
+  }
+
+  checkUniquenessForPhone(phone: string) {
+    let empl = new Employee();
+    empl.phone = phone;
+    return this.http.post(this.url+'phone', empl).toPromise();
+  }
 }

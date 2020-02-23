@@ -1,1 +1,5 @@
-<p>employee works!</p>
+<div *ngIf="currentEmpl.emplId && currentDept.deptId">
+    <div class="display-4">Employee Detail</div>
+    <p class="lead">{{currentEmpl.firstName}} {{currentEmpl.lastName}}</p>
+    <button type="button" (click)="deleteEmpl()" class="btn btn-outline-danger">Delete</button>
+</div>

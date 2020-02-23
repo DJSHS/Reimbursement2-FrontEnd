@@ -28,7 +28,7 @@ export class AllReimbursementComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService, private reimService: ReimbursementService, private emplService: EmployeeService) { }
 
   ngOnInit() {
-    if (!this.authService.empl) {
+    if (!this.authService.empl && !this.authService.empl.isManager) {
       this.router.navigate(['login']);
     } else {
       this.getAllPendingReims();

@@ -1,0 +1,17 @@
+#new-empl-form {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+#submit-empl-btn {
+    margin-right: 1%;
+}
+
+small {
+    color: red;
+}
+
+strong {
+    float: right;
+    cursor: pointer;
+}
