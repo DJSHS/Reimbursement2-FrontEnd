@@ -27,7 +27,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let empl of empls" routerLink="/employees/{{empl.emplId}}">
+        <tr *ngFor="let empl of displayEmpls" routerLink="/employees/{{empl.emplId}}">
           <td>{{empl.emplId}}</td>
           <td>{{empl.firstName | titlecase}}</td>
           <td>{{empl.lastName | titlecase}}</td>
@@ -38,4 +38,22 @@
         </tr>
       </tbody>
     </table>
+    <div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <button class="page-link" aria-label="Previous" [disabled]="currentPage===1" (click)="prevPage()">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </button>
+          </li>
+          <li class="page-item"><button class="page-link">{{currentPage}}</button></li>
+          <li class="page-item">
+            <button class="page-link" aria-label="Next" [disabled]="currentPage===totalPage" (click)="nextPage()">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
 </div>

@@ -19,7 +19,7 @@ export class EmployeeComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private emplService: EmployeeService, private deptService: DepartmentService) { }
 
   ngOnInit() {
-    if (!this.authService.empl ) {
+    if (!this.authService.empl || !this.authService.empl.isManager) {
       this.router.navigate(['login']);
     } else {
       this.route.params.subscribe(param => {
@@ -66,6 +66,10 @@ export class EmployeeComponent implements OnInit {
         }
       )
     }
+  }
+
+  alertModal() {
+    
   }
 
 }

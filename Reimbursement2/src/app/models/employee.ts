@@ -1,5 +1,3 @@
-import { Department } from './department';
-
 export class Employee {
     emplId: number;
     firstName: string ;

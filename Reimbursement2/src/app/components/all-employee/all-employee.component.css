@@ -27,3 +27,8 @@ tbody tr {
 #new-empl-btn {
     margin-left: 670px;
 }
+
+ul li button {
+    cursor: pointer;
+    color: #007bff;
+}

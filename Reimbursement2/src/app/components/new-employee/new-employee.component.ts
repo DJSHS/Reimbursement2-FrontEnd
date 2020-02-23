@@ -27,12 +27,11 @@ export class NewEmployeeComponent implements OnInit {
   constructor(private router: Router, private validService: ValidationService, private authService: AuthService, private emplService: EmployeeService, private deptService: DepartmentService) { }
 
   ngOnInit() {
-    // if (!this.authService.empl && !this.authService.empl.isManager) {
-    //   this.router.navigate(['login']);
-    // } else {
-    //   this.getAllDetpts();
-    // }
-    this.getAllDetpts();
+    if (!this.authService.empl || !this.authService.empl.isManager) {
+      this.router.navigate(['login']);
+    } else {
+      this.getAllDetpts();
+    }
   }
 
   getAllDetpts() {
