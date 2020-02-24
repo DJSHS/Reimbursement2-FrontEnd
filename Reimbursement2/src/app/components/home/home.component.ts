@@ -11,7 +11,8 @@ import { EmployeeService } from 'src/app/services/employee-service/employee.serv
 })
 export class HomeComponent implements OnInit {
 
-  numOfPendingReim: number = 0;
+  numOfPendingReim: number = -1;
+  totalNumOfPendingReim: number = -1;
   showContact: boolean = false;
 
   myManager: any = null;
@@ -22,9 +23,10 @@ export class HomeComponent implements OnInit {
     if (!this.authService.empl) {
       this.router.navigate(['login']);
     } else {
-      this.reimService.getPendingReimbursementsByEmplId(this.authService.empl.emplId).subscribe(
+      this.reimService.getAllPendingReimbursement().subscribe(
         data => {
-          this.numOfPendingReim = data.length;
+          this.totalNumOfPendingReim = data.length;
+          this.numOfPendingReim = data.filter(r => r.submitById === this.authService.empl.emplId).length;
         }
       );
     }

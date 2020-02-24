@@ -75,6 +75,8 @@ export class NewEmployeeComponent implements OnInit {
           this.isUnqiueEmail = data ? true : false;
         }
       )
+    } else {
+      this.isUnqiueEmail = true;
     }
   }
 
@@ -86,6 +88,8 @@ export class NewEmployeeComponent implements OnInit {
           this.isUniquePhone = data ? true : false;
         }
       )
+    } else {
+      this.isUniquePhone = true;
     }
   }
 
@@ -109,7 +113,6 @@ export class NewEmployeeComponent implements OnInit {
 
       this.emplService.createEmployee(this.newEmpl).then(
         response => {
-          console.log(response)
           if (response) {
             this.router.navigate(['employees/all']);
           } else {

@@ -1,7 +1,7 @@
-<div class="text text-left">
+<div class="text text-left" *ngIf="numOfPendingReim >= 0">
+    <p class="lead" *ngIf="authService.empl.isManager">There Are Total <strong routerLink="/reimbursements/all">{{totalNumOfPendingReim}}</strong> Pending Reimbursement Requests</p><br><br>
     <p class="lead">You Currently Have <strong routerLink="/my/reimbursements/pending">{{numOfPendingReim}}</strong> Pending Reimbursement {{numOfPendingReim > 1 ? "Requests" : "Request"}}</p>
     <small *ngIf="authService.empl && authService.empl.managerId"><p>If you have any question, please contact <span (click)="contactInfo()">your manager</span>.</p></small>
-
     <div id="contact" *ngIf="showContact">
         <i>{{myManager.firstName | titlecase}} {{myManager.lastName | titlecase}}</i> At <i>{{myManager.phone}}</i> Or <i>{{myManager.email}}</i>
     </div>

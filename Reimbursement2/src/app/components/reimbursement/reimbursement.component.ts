@@ -102,7 +102,9 @@ export class ReimbursementComponent implements OnInit {
 
   restore() {
     this.editable = '';
-    this.currentReim = this.originalReim;
+    this.changed = false;
+    this.currentReim.amount = this.originalReim.amount;
+    this.currentReim.description = this.originalReim.description;
   }
 
   resolveReim(result) {
