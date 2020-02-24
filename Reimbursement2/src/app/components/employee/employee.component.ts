@@ -5,6 +5,9 @@ import { EmployeeService } from 'src/app/services/employee-service/employee.serv
 import { DepartmentService } from 'src/app/services/department-service/department.service';
 import { Employee } from 'src/app/models/employee';
 import { Department } from 'src/app/models/department';
+import { ReimbursementService } from 'src/app/services/reimbursement-service/reimbursement.service';
+import { Reimbursement } from 'src/app/models/reimbursement';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-employee',
@@ -15,8 +18,14 @@ export class EmployeeComponent implements OnInit {
 
   currentEmpl: Employee = new Employee();
   currentDept: Department = new Department();
+  allReim: Reimbursement[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private emplService: EmployeeService, private deptService: DepartmentService) { }
+  numOfReim: number = 0;
+  totalAmountOfReim: number = 0;
+
+  confirmDelete: string = '';
+
+  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private emplService: EmployeeService, private deptService: DepartmentService, private reimService: ReimbursementService, private modalService: NgbModal) { }
 
   ngOnInit() {
     if (!this.authService.empl || !this.authService.empl.isManager) {
@@ -57,7 +66,8 @@ export class EmployeeComponent implements OnInit {
   }
 
   deleteEmpl() {
-    if (window.confirm('Delete the employee?')) {
+    if (this.confirmDelete === 'Confirm') {
+      this.modalService.dismissAll();
       this.emplService.deleteEmployee(this.currentEmpl.emplId).then(
         data => {
           if (!data) {
@@ -65,11 +75,27 @@ export class EmployeeComponent implements OnInit {
           }
         }
       )
+    } else {
+      this.confirmDelete = '';
     }
   }
 
-  alertModal() {
-    
+  getAllReimsByEmpl() {
+    this.reimService.getAllReimbursementsByEmplId(this.currentEmpl.emplId).subscribe(
+      data => {
+        if (data) {
+          this.allReim = data;
+          this.numOfReim = this.allReim.length;
+          this.totalAmountOfReim = this.allReim.filter(r => r.status === 'resolved').reduce((a, c) => a += c.amount, 0);
+        }
+      }, error => {
+        console.warn(error);
+      }
+    )
   }
+
+  openAlertModal(content) {
+    this.modalService.open(content, { centered: true });
+	}
 
 }

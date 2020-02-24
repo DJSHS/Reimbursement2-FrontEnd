@@ -18,6 +18,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { PendingReimbursementComponent } from './components/pending-reimbursement/pending-reimbursement.component';
 import { ResolvedReimbursementComponent } from './components/resolved-reimbursement/resolved-reimbursement.component';
 import { EmployeeComponent } from './components/employee/employee.component';
+import { EmployeeService } from './services/employee-service/employee.service';
+import { ReimbursementService } from './services/reimbursement-service/reimbursement.service';
+import { DepartmentService } from './services/department-service/department.service';
+import { ValidationService } from './services/validation-service/validation.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,7 @@ import { EmployeeComponent } from './components/employee/employee.component';
     LoginComponent,
     PendingReimbursementComponent,
     ResolvedReimbursementComponent,
-    EmployeeComponent
+    EmployeeComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,13 @@ import { EmployeeComponent } from './components/employee/employee.component';
     HttpClientModule,
     NgbModule
   ],
-  providers: [],
+  providers: [
+    EmployeeService,
+    ReimbursementService,
+    DepartmentService,
+    ValidationService,
+    NgbModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,6 +7,7 @@ import { DepartmentService } from 'src/app/services/department-service/departmen
 import { Reimbursement } from 'src/app/models/reimbursement';
 import { Employee } from 'src/app/models/employee';
 import { Department } from 'src/app/models/department';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-reimbursement',
@@ -21,11 +22,12 @@ export class ReimbursementComponent implements OnInit {
   resolvedByEmpl: Employee = new Employee();
 
   originalReim: Reimbursement;
+  result: string = '';
   editable: string = '';
   changed: boolean = false;
   success: boolean = false;
 
-  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private reimService: ReimbursementService, private emplService: EmployeeService, private deptService: DepartmentService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private reimService: ReimbursementService, private emplService: EmployeeService, private deptService: DepartmentService, private modalService: NgbModal) { }
 
   ngOnInit() {
     if (!this.authService.empl) {
@@ -107,8 +109,9 @@ export class ReimbursementComponent implements OnInit {
     this.currentReim.description = this.originalReim.description;
   }
 
-  resolveReim(result) {
-    this.currentReim.result = result;
+  resolveReim() {
+    this.modalService.dismissAll();
+    this.currentReim.result = this.result;
     this.currentReim.status = 'resolved';
     this.currentReim.resolvedById = this.authService.empl.emplId;
     this.currentReim.resolvedDate = new Date().toISOString().slice(0, 10);
@@ -124,15 +127,13 @@ export class ReimbursementComponent implements OnInit {
   }
 
   delete() {
-    if (window.confirm('Delete the reimbursement?')) {
-      this.reimService.deleteReimbursement(this.currentReim.reimId).then(
-        response => {
-          if (!response) {
-            this.router.navigate(['/my/reimbursements/pending']);
-          }
+    this.reimService.deleteReimbursement(this.currentReim.reimId).then(
+      response => {
+        if (!response) {
+          this.router.navigate(['/my/reimbursements/pending']);
         }
-      )
-    }
+      }
+    )
   }
 
   redirectToEmpl(e: string = 'pending') {
@@ -153,5 +154,14 @@ export class ReimbursementComponent implements OnInit {
     if (this.currentReim.amount !== this.originalReim.amount || this.currentReim.description !== this.originalReim.description) {
       this.changed = true;
     }
+  }
+
+  setResult(res) {
+    this.result = res;
+  }
+
+  openAlertModal(content, res) {
+    this.setResult(res);
+    this.modalService.open(content, { centered: true });
   }
 }

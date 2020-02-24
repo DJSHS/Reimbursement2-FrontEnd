@@ -1,21 +1,22 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Warning</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Current employee will be delete. Enter <strong><i>Confirm</i></strong> To Continue.</p>
+    <input type="text" class="form-control" placeholder="Please Confirm" name="confirm" [(ngModel)]="confirmDelete">
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="deleteEmpl()">Submit</button>
+  </div>
+</ng-template>
+
 <div *ngIf="currentEmpl.emplId && currentDept.deptId">
     <div class="display-4">Employee Detail</div>
     <p class="lead">{{currentEmpl.firstName}} {{currentEmpl.lastName}}</p>
-    <button type="button" *ngIf="!currentEmpl.isManager" (click)="deleteEmpl()" class="btn btn-outline-danger">Delete</button>
-    
-    <div>
-        <pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">ngbAutofocus</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>btn btn-danger<span class="token punctuation">"</span></span>
-        <span class="token attr-name">(click)</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>modal.close(<span class="token punctuation">'</span>Ok click<span class="token punctuation">'</span>)<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Ok<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span></code></pre>
-      
-      <br />
-      <button class="btn btn-outline-primary mr-2" (click)="open('focusFirst')">
-        <div>Open confirm modal</div>
-        <div class="text-dark" aria-hidden="true"><small>&times; button will be focused</small></div>
-      </button>
-      
-      <button class="btn btn-outline-primary" (click)="open('autofocus')">
-        <div>Open confirm modal with `ngbAutofocus`</div>
-        <div class="text-dark" aria-hidden="true"><small>Ok button will be focused</small></div>
-      </button>
-    </div>
+    <button type="button" *ngIf="!currentEmpl.isManager" (click)="openAlertModal(content)" class="btn btn-outline-danger">Delete</button>
 </div>
