@@ -20,6 +20,11 @@ export class ReimbursementComponent implements OnInit {
   currentDept: Department = new Department();
   resolvedByEmpl: Employee = new Employee();
 
+  originalReim: Reimbursement;
+  editable: string = '';
+  changed: boolean = false;
+  success: boolean = false;
+
   constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private reimService: ReimbursementService, private emplService: EmployeeService, private deptService: DepartmentService) { }
 
   ngOnInit() {
@@ -42,6 +47,7 @@ export class ReimbursementComponent implements OnInit {
           this.router.navigate(['home']);
         } else {
           this.currentReim = data;
+          this.originalReim = Object.assign({}, this.currentReim);
           this.getCurrentEmpl(this.currentReim.submitById);
           if (this.currentReim.resolvedById) {
             this.getCurrentEmpl(this.currentReim.resolvedById, true);
@@ -79,11 +85,24 @@ export class ReimbursementComponent implements OnInit {
   }
 
   update() {
+    this.currentReim.submitDate = new Date().toISOString().slice(0, 10)
+    this.editable = '';
 
+    this.reimService.updateReimbursement(this.currentReim).then(
+      response => {
+        if (!response) {
+          this.originalReim = Object.assign({}, this.currentReim);
+          this.changed = false;
+          this.success = true;
+          setTimeout(() => this.success = false, 5000);
+        }
+      }
+    )
   }
 
   restore() {
-
+    this.editable = '';
+    this.currentReim = this.originalReim;
   }
 
   resolveReim(result) {
@@ -117,6 +136,20 @@ export class ReimbursementComponent implements OnInit {
   redirectToEmpl(e: string = 'pending') {
     if (this.authService.empl.isManager) {
       e === 'pending' ? this.router.navigate(['employees', this.currentReim.submitById]) : this.router.navigate(['employees', this.resolvedByEmpl.emplId]);
+    }
+  }
+
+  edit(attribute) {
+    if (this.editable === attribute) {
+      this.editable = '';
+    } else {
+      this.editable = attribute;
+    }
+  }
+
+  compareReim() {
+    if (this.currentReim.amount !== this.originalReim.amount || this.currentReim.description !== this.originalReim.description) {
+      this.changed = true;
     }
   }
 }

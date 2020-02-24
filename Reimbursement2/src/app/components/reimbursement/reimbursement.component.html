@@ -5,36 +5,45 @@
 			<tr>
 				<th scope="col">Id</th>
 				<td>{{currentReim.reimId}}</td>
+				<td></td>
 			</tr>
 			<tr>
-				<th scope="col">Amount</th>
-				<td>${{currentReim.amount}}</td>
+				<th scope="col">Amount ($)</th>
+				<td><input type="number" step="0.01" min="0.01" name="amount" (ngModelChange)="compareReim()" [(ngModel)]="currentReim.amount" [readonly]="editable!=='amount'" [ngClass]="editable==='amount' ? 'editField' : ''"></td>
+				<td><img class="edit" (click)="edit('amount')" src="assets/pencil.png"/></td>
 			</tr>
 			<tr>
 				<th scope="col">Status</th>
 				<td>{{currentReim.status | titlecase}}</td>
+				<td></td>
 			</tr>
 			<tr>
 				<th scope="col">Submit By</th>
 				<td [ngClass]="authService.empl.isManager ? 'clickable' : ''" (click)="redirectToEmpl()">{{currentEmpl.firstName | titlecase}} {{currentEmpl.lastName | titlecase}}</td>
+				<td></td>
 			</tr>
 			<tr>
 				<th scope="col">Department</th>
 				<td>{{currentDept.deptName}}</td>
+				<td></td>
 			</tr>
 			<tr>
 				<th scope="col">Submit At</th>
 				<td>{{currentReim.submitDate}}</td>
+				<td></td>
 			</tr>
 			<tr>
 				<th scope="col">Description</th>
-				<td>{{currentReim.description}}</td>
+				<td><input type="text" name="description" (ngModelChange)="compareReim()" [(ngModel)]="currentReim.description" [readonly]="editable!=='description'" [ngClass]="editable==='description' ? 'editField' : ''"></td>
+				<td><img class="edit" (click)="edit('description')" src="assets/pencil.png"/></td>
 			</tr>
 			<tr>
 				<th scope="col">Image</th>
 				<td>{{currentReim.receipt ? currentReim.receipt : 'N/A'}}</td>
+				<td></td>
 			</tr>
 		</table>
+		<div class="alert alert-success" *ngIf="success">Updated Success!</div>
 		<div *ngIf="authService.empl.isManager && authService.empl.isManager > currentEmpl.isManager" class="text text-center">
 			<div class="input-group">
 				<div class="input-group-prepend">
@@ -47,8 +56,8 @@
 			<br>
 		</div>
 		<div id="button-field" *ngIf="authService.empl.emplId === currentReim.submitById" class="text text-center">
-			<button type="button" id="restore-btn" (click)="restore()" class="btn btn-outline-info">Cancel</button>
-			<button type="button" id="update-btn" (click)="update()" class="btn btn-outline-primary">Submit</button>
+			<button type="button" id="restore-btn" (click)="restore()" *ngIf="changed" class="btn btn-outline-info">Cancel</button>
+			<button type="button" id="update-btn" (click)="update()" *ngIf="changed" class="btn btn-outline-primary">Submit</button>
 			<button type="button" id="delete-btn" (click)="delete()" class="btn btn-outline-secondary">Delete</button>
 		</div><br>
 	</div>

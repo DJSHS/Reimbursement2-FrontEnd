@@ -1,7 +1,7 @@
 <div *ngIf="currentEmpl.emplId && currentDept.deptId">
     <div class="display-4">Employee Detail</div>
     <p class="lead">{{currentEmpl.firstName}} {{currentEmpl.lastName}}</p>
-    <button type="button" (click)="deleteEmpl()" class="btn btn-outline-danger">Delete</button>
+    <button type="button" *ngIf="!currentEmpl.isManager" (click)="deleteEmpl()" class="btn btn-outline-danger">Delete</button>
     
     <div>
         <pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">ngbAutofocus</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>btn btn-danger<span class="token punctuation">"</span></span>
