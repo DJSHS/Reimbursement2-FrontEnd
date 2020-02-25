@@ -8,6 +8,7 @@ import { Department } from 'src/app/models/department';
 import { ReimbursementService } from 'src/app/services/reimbursement-service/reimbursement.service';
 import { Reimbursement } from 'src/app/models/reimbursement';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ValidationService } from 'src/app/services/validation-service/validation.service';
 
 @Component({
   selector: 'app-employee',
@@ -17,17 +18,30 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class EmployeeComponent implements OnInit {
 
   currentEmpl: Employee = new Employee();
+  currentManager: Employee;
   currentDept: Department = new Department();
+
   allReim: Reimbursement[] = [];
+  originalEmpl: Employee;
+  managerName: string = '';
+  emplName: string = '';
 
   numOfReim: number = 0;
   totalAmountOfReim: number = 0;
 
   confirmDelete: string = '';
+  changed: boolean = false;
+  editable: string = '';
+  success: boolean = false;
 
-  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private emplService: EmployeeService, private deptService: DepartmentService, private reimService: ReimbursementService, private modalService: NgbModal) { }
+  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private emplService: EmployeeService, private deptService: DepartmentService, private reimService: ReimbursementService, private validService: ValidationService, private modalService: NgbModal) { }
 
   ngOnInit() {
+    this.authService.empl = new Employee();
+    this.authService.empl.emplId = 3;
+    this.authService.empl.isManager = 1;
+    this.authService.empl.managerId = 5;
+
     if (!this.authService.empl || !this.authService.empl.isManager) {
       this.router.navigate(['login']);
     } else {
@@ -47,7 +61,14 @@ export class EmployeeComponent implements OnInit {
           this.router.navigate(['home']);
         } else {
           this.currentEmpl = data;
-          this.getCurrentDept(this.currentEmpl.deptId);
+          this.emplName = `${this.currentEmpl.firstName} ${this.currentEmpl.lastName}`;
+          this.originalEmpl = Object.assign({}, this.currentEmpl);
+
+          this.getCurrentDept();
+          this.getAllReimsByEmpl();
+          if (this.currentEmpl.managerId) {
+            this.getCurrentManager();
+          }
         }
       }, error => {
         console.warn(error);
@@ -55,12 +76,21 @@ export class EmployeeComponent implements OnInit {
     )
   }
 
-  getCurrentDept(deptId) {
-    this.deptService.getDeptById(deptId).subscribe(
+  getCurrentDept() {
+    this.deptService.getDeptById(this.currentEmpl.deptId).subscribe(
       data => {
         this.currentDept = data;
       }, error => {
         console.warn(error);
+      }
+    )
+  }
+
+  getCurrentManager() {
+    this.emplService.getEmployeeById(this.currentEmpl.managerId).subscribe(
+      data => {
+        this.currentManager = data;
+        this.managerName = `${this.currentManager.firstName} ${this.currentManager.lastName}`;
       }
     )
   }
@@ -85,7 +115,7 @@ export class EmployeeComponent implements OnInit {
       data => {
         if (data) {
           this.allReim = data;
-          this.numOfReim = this.allReim.length;
+          this.numOfReim = this.allReim.filter(r => r.status === 'resolved').length;
           this.totalAmountOfReim = this.allReim.filter(r => r.status === 'resolved').reduce((a, c) => a += c.amount, 0);
         }
       }, error => {
@@ -96,6 +126,42 @@ export class EmployeeComponent implements OnInit {
 
   openAlertModal(content) {
     this.modalService.open(content, { centered: true });
-	}
+  }
+
+  edit(attribute) {
+    if (this.editable === attribute) {
+      this.editable = '';
+    } else {
+      this.editable = attribute;
+    }
+  }
+
+  restore() {
+    this.changed = false;
+    this.editable = '';
+    this.currentEmpl = Object.assign({}, this.originalEmpl);
+  }
+
+  updateEmployee() {
+    this.currentEmpl.firstName = this.validService.nameFormat(this.currentEmpl.firstName);
+    this.currentEmpl.lastName = this.validService.nameFormat(this.currentEmpl.lastName);
+
+    this.changed = false;
+    this.editable = '';
+
+    this.emplService.updateEmployee(this.currentEmpl).then(
+      data => {
+        if (!data) {
+          this.route.params.subscribe(param => {
+            this.currentEmpl.emplId = param['id'];
+            this.getCurrentEmpl(this.currentEmpl.emplId);
+
+            this.success = true;
+            setTimeout(() => this.success = false, 5000);
+          })
+        }
+      }
+    )
+  }
 
 }

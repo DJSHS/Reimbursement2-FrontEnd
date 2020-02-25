@@ -1,0 +1,31 @@
+#empl-detail {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.edit {
+    cursor: pointer;
+}
+
+small {
+    color: red;
+}
+
+input {
+    border: none;
+}
+
+button {
+    margin-left: 10px;
+}
+
+.editField {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+}
+
+#confirm-input {
+    border: 0.8px solid lightgray;
+}

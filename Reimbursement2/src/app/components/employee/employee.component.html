@@ -7,7 +7,7 @@
   </div>
   <div class="modal-body">
     <p>Current employee will be delete. Enter <strong><i>Confirm</i></strong> To Continue.</p>
-    <input type="text" class="form-control" placeholder="Please Confirm" name="confirm" [(ngModel)]="confirmDelete" autocomplete="off">
+    <input type="text" class="form-control" id="confirm-input" placeholder="Please Confirm" name="confirm" [(ngModel)]="confirmDelete" autocomplete="off">
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cancel</button>
@@ -15,8 +15,72 @@
   </div>
 </ng-template>
 
-<div *ngIf="currentEmpl.emplId && currentDept.deptId">
-    <div class="display-4">Employee Detail</div>
-    <p class="lead">{{currentEmpl.firstName}} {{currentEmpl.lastName}}</p>
-    <button type="button" *ngIf="!currentEmpl.isManager" (click)="openAlertModal(content)" class="btn btn-outline-danger">Delete</button>
+<div *ngIf="currentEmpl.emplId && currentDept.deptId" id="empl-detail">
+    <p class="display-4">{{emplName}}</p>
+    <table class="table table-bordered">
+      <tr>
+        <th>Total Number Of Resolved Reimbursements</th>
+        <th>Total Amount Of Resolved Reimbursements</th>
+      </tr>
+      <tr>
+        <td>{{numOfReim}}</td>
+        <td>${{totalAmountOfReim}}</td>
+      </tr>
+    </table>
+    <table class="table table-hover">
+      <tr>
+        <th scope="col">Id</th>
+        <td>{{currentEmpl.emplId}}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <th scope="col">First Name</th>
+        <td><input type="text" name="firstName" (ngModelChange)="changed=true" [(ngModel)]="currentEmpl.firstName" [readonly]="editable!=='firstName'" [ngClass]="editable==='firstName' ? 'editField' : ''"></td>
+        <td><img class="edit" (click)="edit('firstName')" src="assets/pencil.png"/></td>
+      </tr>
+      <small *ngIf="!validService.validateName(currentEmpl.firstName)">Invalid Name</small>
+      <tr>
+        <th scope="col">Last Name</th>
+        <td><input type="text" name="lastName" (ngModelChange)="changed=true" [(ngModel)]="currentEmpl.lastName" [readonly]="editable!=='lastName'" [ngClass]="editable==='lastName' ? 'editField' : ''"></td>
+        <td><img class="edit" (click)="edit('lastName')" src="assets/pencil.png"/></td>
+      </tr>
+      <small *ngIf="!validService.validateName(currentEmpl.lastName)">Invalid Name</small>
+      <tr>
+        <th scope="col">Email</th>
+        <td>{{currentEmpl.email}}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <th scope="col">Phone</th>
+        <td>{{currentEmpl.phone}}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <th scope="col">Position</th>
+        <td><input type="text" name="position" (ngModelChange)="changed=true" [(ngModel)]="currentEmpl.position" [readonly]="editable!=='position'" [ngClass]="editable==='position' ? 'editField' : ''"></td>
+        <td><img class="edit" (click)="edit('position')" src="assets/pencil.png"/></td>
+      </tr>
+      <tr>
+        <th scope="col">Department</th>
+        <td>{{currentDept.deptName}}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <th scope="col">Manager</th>
+        <td>{{managerName ? managerName : "Null"}}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <th scope="col">Is Manager</th>
+        <td>{{currentEmpl.isManager ? "True" : "False"}}</td>
+        <td></td>
+      </tr>
+    </table>
+    <p class="alert alert-success" *ngIf="success">Update Employee Success</p>
+    <div id="button-field" class="text text-right">
+      <button type="button" (click)="restore()" *ngIf="changed" class="btn btn-outline-secondary">Cancel</button>
+      <button type="button" (click)="updateEmployee()" *ngIf="changed" class="btn btn-outline-primary">Submit</button>
+      <button type="button" *ngIf="!currentEmpl.isManager" (click)="openAlertModal(content)" class="btn btn-outline-danger">Delete</button>
+    </div>
+    <br>
 </div>

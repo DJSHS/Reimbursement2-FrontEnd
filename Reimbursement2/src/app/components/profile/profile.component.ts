@@ -85,16 +85,11 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  compareProfile() {
-    if (this.profile.email !== this.originalProfile.email || this.profile.phone !== this.originalProfile.phone || this.newPass) {
-      this.changed = true;
-    }
-  }
-
   updateProfile() {
     if ((!this.newPass || (this.newPass === this.confirmPass && this.validService.validatePassword(this.newPass))) && this.validService.validateEmail(this.profile.email) && this.validService.validatePhone(this.profile.phone) && this.isUniquePhone && this.isUnqiueEmail) {
 
       this.profile.password = this.newPass ? this.newPass : this.profile.password;
+      this.profile.phone = this.validService.phoneFormat(this.profile.phone);
       this.editable = '';
       this.changed = false;
 
@@ -105,7 +100,7 @@ export class ProfileComponent implements OnInit {
             this.confirmPass = '';
             this.getMyProfile();
             this.success = true;
-            setTimeout(() => this.success = false, 3000);
+            setTimeout(() => this.success = false, 5000);
           }
         }
       )
@@ -122,10 +117,11 @@ export class ProfileComponent implements OnInit {
     this.profile.password = this.originalProfile.password;
   }
 
-  uniqueEmail() {
-    if (this.profile.email !== this.originalProfile.email) {
-      if (this.validService.validateEmail(this.profile.email)) {
-        this.emplService.checkUniquenessForEmail(this.profile.email).then(
+  uniqueEmail(event) {
+    this.changed = true;
+    if (event !== this.originalProfile.email) {
+      if (this.validService.validateEmail(event)) {
+        this.emplService.checkUniquenessForEmail(event).then(
           data => {
             this.isUnqiueEmail = data ? true : false;
           }
@@ -136,11 +132,12 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  uniquePhone() {
-    if (this.profile.phone !== this.originalProfile.phone) {
-      if (this.validService.validatePhone(this.profile.phone)) {
-        this.profile.phone = this.validService.phoneFormat(this.profile.phone);
-        this.emplService.checkUniquenessForPhone(this.profile.phone).then(
+  uniquePhone(event) {
+    this.changed = true;
+    if (event !== this.originalProfile.phone) {
+      if (this.validService.validatePhone(event)) {
+        event = this.validService.phoneFormat(event);
+        this.emplService.checkUniquenessForPhone(event).then(
           data => {
             this.isUniquePhone = data ? true : false;
           }

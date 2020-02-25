@@ -8,14 +8,14 @@
         </tr>
         <tr>
             <th scope="col">Email</th>
-            <td><input type="text" name="email" (ngModelChange)="compareProfile()" [(ngModel)]="profile.email" [readonly]="editable!=='email'" [ngClass]="editable==='email' ? 'editField' : ''" (ngModelChange)="uniqueEmail()"></td>
+            <td><input type="text" name="email" (ngModelChange)="uniqueEmail($event)" [(ngModel)]="profile.email" [readonly]="editable!=='email'" [ngClass]="editable==='email' ? 'editField' : ''" autocomplete="off"></td>
             <td><img class="edit" (click)="edit('email')" src="assets/pencil.png"/></td>
         </tr>
         <small *ngIf="profile.email && !validService.validateEmail(profile.email)">Invalid Email</small>
         <small *ngIf="!isUnqiueEmail && profile.email!==originalProfile.email">Email Already In Use</small>
         <tr>
             <th scope="col">Phone</th>
-            <td><input type="text" name="phone" (ngModelChange)="compareProfile()" [(ngModel)]="profile.phone" [readonly]="editable!=='phone'" [ngClass]="editable==='phone' ? 'editField' : ''" (ngModelChange)="uniquePhone()"></td>
+            <td><input type="text" name="phone" (ngModelChange)="uniquePhone($event)" [(ngModel)]="profile.phone" [readonly]="editable!=='phone'" [ngClass]="editable==='phone' ? 'editField' : ''" autocomplete="off"></td>
             <td><img class="edit" (click)="edit('phone')" src="assets/pencil.png"/></td>
         </tr>
         <small *ngIf="profile.phone && !validService.validatePhone(profile.phone)">Invalid Phone</small>
@@ -39,7 +39,7 @@
     <div class="form-row" id="password-field">
         <div class="form-group col-md-6">
             <label for="newPass">New Password</label>
-            <input type="password" placeholder="Enter New Password" class="form-control" name="newPass" id="newPass" [(ngModel)]="newPass" (ngModelChange)="compareProfile()">
+            <input type="password" placeholder="Enter New Password" class="form-control" name="newPass" id="newPass" [(ngModel)]="newPass" (ngModelChange)="changed=true">
             <small *ngIf="newPass && !validService.validatePassword(newPass)">Password Not Valid</small>
         </div>
         <div class="form-group col-md-6">
@@ -51,6 +51,6 @@
     <p class="alert alert-success" *ngIf="success">Update Profile Success</p>
     <div class="text text-right">
         <button type="button" (click)="restore()" *ngIf="changed" class="btn btn-outline-secondary">Cancel</button>
-        <button type="button" (click)="updateProfile()" *ngIf="changed" class="btn btn-outline-primary">Submit</button>
+        <button type="button" (click)="updateProfile()" *ngIf="changed" class="btn btn-outline-primary" [disabled]="!profile.email || !profile.phone">Submit</button>
     </div><br>
 </div>

@@ -22,7 +22,7 @@ export class NewReimbursementComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService, private reimService: ReimbursementService, private imageService: ImageService) { }
 
   ngOnInit() {
-    if (!this.authService.empl) {
+    if (!this.authService.empl || !this.authService.empl.managerId) {
       this.router.navigate(['login']);
     }
   }
