@@ -7,7 +7,7 @@
   </div>
   <div class="modal-body">
     <p>Current employee will be delete. Enter <strong><i>Confirm</i></strong> To Continue.</p>
-    <input type="text" class="form-control" placeholder="Please Confirm" name="confirm" [(ngModel)]="confirmDelete">
+    <input type="text" class="form-control" placeholder="Please Confirm" name="confirm" [(ngModel)]="confirmDelete" autocomplete="off">
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cancel</button>

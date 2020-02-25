@@ -13,3 +13,17 @@ nav {
     font-family: Georgia, 'Times New Roman', Times, serif;
     color: #4c5858;
 }
+
+a {
+    cursor: pointer;
+    color: gray;
+    font-size: 1.1em;
+}
+
+a:hover {
+    color: black;
+}
+
+li {
+    margin-right: 1.5em;
+}

@@ -12,6 +12,7 @@ import { Reimbursement } from 'src/app/models/reimbursement';
 export class NewReimbursementComponent implements OnInit {
 
   newReim: Reimbursement = new Reimbursement();
+  selectedImg: File;
 
   success: boolean = false;
   fail: boolean = false;
@@ -45,6 +46,13 @@ export class NewReimbursementComponent implements OnInit {
         }
       }
     )
+  }
+
+  upload(event) {
+    if (event.target.files.length) {
+      this.selectedImg = event.target.files[0]
+      this.newReim.receipt = this.selectedImg.name;
+    }
   }
 
 }

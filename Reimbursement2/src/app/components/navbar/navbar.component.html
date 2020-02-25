@@ -5,25 +5,27 @@
     <li id="title" class="nav-item" *ngIf="!authService.empl">
         <div class="nav-link display-4 text text-center">Expense Reimbursement System</div>
     </li>
-    <li class="nav-item" *ngIf="authService.empl">
-        <a class="nav-link" routerLink="home">Home</a>
-    </li>
-    <li class="nav-item" *ngIf="authService.empl && authService.empl.isManager">
-        <a class="nav-link" routerLink="employees/all">All Employees</a>
-    </li>
-    <li class="nav-item" *ngIf="authService.empl && authService.empl.isManager">
-        <a class="nav-link" routerLink="reimbursements/all">All Reimbursements</a>
-    </li>
-    <li class="nav-item" *ngIf="authService.empl  && authService.empl.managerId">
-        <a class="nav-link" routerLink="new/reimbursement">New Reimbursement</a>
-    </li>
-    <li class="nav-item" *ngIf="authService.empl">
-        <a class="nav-link" routerLink="my/reimbursements/pending">My Reimbursement</a>
-    </li>
-    <li class="nav-item" *ngIf="authService.empl">
-        <a class="nav-link" routerLink="my/profile">Profile</a>
-    </li>
-    <li class="nav-item" *ngIf="authService.empl">
-        <a class="nav-link" (click)="logout()">Log Out</a>
-    </li>
+    <div class="d-flex justify-content-end">
+        <li class="nav-item" *ngIf="authService.empl">
+            <a class="nav-link" routerLink="home">Home</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.empl && authService.empl.isManager">
+            <a class="nav-link" routerLink="employees/all">All Employees</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.empl && authService.empl.isManager">
+            <a class="nav-link" routerLink="reimbursements/all">All Reimbursements</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.empl  && authService.empl.managerId">
+            <a class="nav-link" routerLink="new/reimbursement">New Reimbursement</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.empl">
+            <a class="nav-link" routerLink="my/reimbursements/pending">My Reimbursement</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.empl">
+            <a class="nav-link" routerLink="my/profile">Profile</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.empl">
+            <a class="nav-link" (click)="logout()">Log Out</a>
+        </li>
+    </div>
 </nav>
