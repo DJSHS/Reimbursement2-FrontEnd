@@ -5,7 +5,6 @@ export class Employee {
     email: string;
     password: string;
     phone: string;
-    image: string;
     managerId: number;
     isManager: number;
     deptId: number;

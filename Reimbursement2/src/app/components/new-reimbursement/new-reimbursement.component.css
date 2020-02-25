@@ -10,3 +10,9 @@
 input {
     background-color: white;
 }
+
+#remove-image {
+    cursor: pointer;
+    color: lightslategrey;
+    border: none;
+}

@@ -1,0 +1,8 @@
+// ng serve --proxy-config proxy.config.json
+
+{
+    "/lite": {
+      "target": "http://localhost:8080",
+      "secure": "false"
+    }
+}

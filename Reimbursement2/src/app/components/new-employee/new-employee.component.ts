@@ -98,7 +98,6 @@ export class NewEmployeeComponent implements OnInit {
       this.newEmpl.firstName = this.validService.nameFormat(this.newEmpl.firstName);
       this.newEmpl.lastName = this.validService.nameFormat(this.newEmpl.lastName);
       this.newEmpl.isManager = 0;
-      this.newEmpl.image = '';
       if (!this.newEmpl.managerId) {
         this.newEmpl.managerId = 0;
       }

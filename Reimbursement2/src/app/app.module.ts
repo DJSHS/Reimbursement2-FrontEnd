@@ -22,6 +22,7 @@ import { EmployeeService } from './services/employee-service/employee.service';
 import { ReimbursementService } from './services/reimbursement-service/reimbursement.service';
 import { DepartmentService } from './services/department-service/department.service';
 import { ValidationService } from './services/validation-service/validation.service';
+import { ImageService } from './services/image-service/image.service';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { ValidationService } from './services/validation-service/validation.serv
     ReimbursementService,
     DepartmentService,
     ValidationService,
+    ImageService,
     NgbModule
   ],
   bootstrap: [AppComponent]

@@ -26,7 +26,7 @@ export class PendingReimbursementComponent implements OnInit {
   getAllPendingReims() {
     this.reimService.getPendingReimbursementsByEmplId(this.authService.empl.emplId).subscribe(
       data => {
-        this.pendingReims = data;
+        this.pendingReims = data.sort((a, b) => a.reimId > b.reimId ? 1 : -1);
     }, error => {
       console.warn(error);
     })

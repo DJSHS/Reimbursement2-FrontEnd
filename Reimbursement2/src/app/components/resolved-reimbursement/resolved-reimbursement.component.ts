@@ -27,7 +27,7 @@ export class ResolvedReimbursementComponent implements OnInit {
   getAllResolvedReims() {
     this.reimService.getResolvedReimbursementsByEmplId(this.authService.empl.emplId).subscribe(
       data => {
-        this.allResolvedReims = data;
+        this.allResolvedReims = data.sort((a, b) => a.resolvedDate > b.resolvedDate ? -1 : 1);
         this.resolvedReims = this.allResolvedReims;
     }, error => {
       console.warn(error);

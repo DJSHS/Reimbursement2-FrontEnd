@@ -13,7 +13,8 @@ export const environment = {
   loginUri: `${baseUri}:${port}/${name}/login/`,
   employeeUri: `${baseUri}:${port}/${name}/employees/`,
   departmentUri: `${baseUri}:${port}/${name}/departments/`,
-  reimbursementUri: `${baseUri}:${port}/${name}/reimbursements/`
+  reimbursementUri: `${baseUri}:${port}/${name}/reimbursements/`,
+  imageUri: `${baseUri}:${port}/${name}/images/`
 };
 
 /*

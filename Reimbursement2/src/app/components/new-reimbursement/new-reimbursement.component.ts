@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ReimbursementService } from 'src/app/services/reimbursement-service/reimbursement.service';
 import { Reimbursement } from 'src/app/models/reimbursement';
+import { ImageService } from 'src/app/services/image-service/image.service';
 
 @Component({
   selector: 'app-new-reimbursement',
@@ -18,7 +19,7 @@ export class NewReimbursementComponent implements OnInit {
   fail: boolean = false;
   submited: boolean = false;
 
-  constructor(private router: Router, private authService: AuthService, private reimService: ReimbursementService) { }
+  constructor(private router: Router, private authService: AuthService, private reimService: ReimbursementService, private imageService: ImageService) { }
 
   ngOnInit() {
     if (!this.authService.empl) {
@@ -32,7 +33,6 @@ export class NewReimbursementComponent implements OnInit {
     this.newReim.submitById = this.authService.empl.emplId;
     this.newReim.submitDate = new Date().toISOString().slice(0, 10);
     this.newReim.resolvedById = 0;
-    this.newReim.receipt = '';
 
     this.reimService.createReimbursement(this.newReim).then(
       response => {
@@ -40,6 +40,14 @@ export class NewReimbursementComponent implements OnInit {
           this.submited = true;
           this.success = true;
           setTimeout(() => this.success = false, 3000);
+
+          // if (this.newReim.receipt) {
+          //   this.onUpload().then(
+          //     data => {
+          //       console.log(data);
+          //     }
+          //   )
+          // }
         } else {
           this.fail = true;
           setTimeout(() => this.fail = false, 3000);
@@ -55,4 +63,12 @@ export class NewReimbursementComponent implements OnInit {
     }
   }
 
+  onUpload() {
+    // return this.imageService.uploadImageForReim(this.selectedImg);
+  }
+
+  removeImg() {
+    this.selectedImg = null;
+    this.newReim.receipt = '';
+  }
 }
