@@ -3,6 +3,6 @@
     <p class="lead">You Currently Have <strong routerLink="/my/reimbursements/pending">{{numOfPendingReim}}</strong> Pending Reimbursement {{numOfPendingReim > 1 ? "Requests" : "Request"}}</p>
     <small *ngIf="authService.empl && authService.empl.managerId"><p>If you have any question, please contact <span (click)="contactInfo()">your manager</span>.</p></small>
     <div id="contact" *ngIf="showContact">
-        <i>{{myManager.firstName | titlecase}} {{myManager.lastName | titlecase}}</i> At <i>{{myManager.phone}}</i> Or <i>{{myManager.email}}</i>
+        <i>{{myManager.firstName | titlecase}} {{myManager.lastName | titlecase}}</i>, {{myManager.position}} At <i>{{myManager.phone}}</i> Or <i>{{myManager.email}}</i>
     </div>
 </div>
