@@ -29,3 +29,19 @@ button {
 #confirm-input {
     border: 0.8px solid lightgray;
 }
+
+#show-reimbursements {
+    float: left;
+}
+
+tbody tr {
+    cursor: pointer;
+}
+
+#no-reimbursement-text {
+    font-size: 1.5em;
+}
+
+button {
+    margin-bottom: 20px;
+}

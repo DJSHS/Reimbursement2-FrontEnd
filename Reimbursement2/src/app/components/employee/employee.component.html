@@ -78,9 +78,30 @@
     </table>
     <p class="alert alert-success" *ngIf="success">Update Employee Success</p>
     <div id="button-field" class="text text-right">
+      <button class="btn btn-outline-info" type="button" (click)="showReimByEmpl()" id="show-reimbursements">Show All Reimbursements</button>
       <button type="button" (click)="restore()" *ngIf="changed" class="btn btn-outline-secondary">Cancel</button>
       <button type="button" (click)="updateEmployee()" *ngIf="changed" class="btn btn-outline-primary">Submit</button>
       <button type="button" *ngIf="!currentEmpl.isManager" (click)="openAlertModal(content)" class="btn btn-outline-danger">Delete</button>
     </div>
+    <br>
+    <p *ngIf="showReim && !allReim.length" id="no-reimbursement-text">Current Employee Doesn't Have Any Reimbursment Request.</p>
+    <table class="table table-hover" *ngIf="showReim && allReim.length">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Submit At</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reim of allReim" routerLink="/reimbursements/{{reim.reimId}}">
+          <td>{{reim.reimId}}</td>
+          <td>${{reim.amount}}</td>
+          <td>{{reim.submitDate}}</td>
+          <td>{{reim.status | titlecase}}</td>
+        </tr>
+      </tbody>
+    </table>
     <br>
 </div>

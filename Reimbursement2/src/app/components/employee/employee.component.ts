@@ -33,15 +33,11 @@ export class EmployeeComponent implements OnInit {
   changed: boolean = false;
   editable: string = '';
   success: boolean = false;
+  showReim: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private emplService: EmployeeService, private deptService: DepartmentService, private reimService: ReimbursementService, private validService: ValidationService, private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.authService.empl = new Employee();
-    this.authService.empl.emplId = 3;
-    this.authService.empl.isManager = 1;
-    this.authService.empl.managerId = 5;
-
     if (!this.authService.empl || !this.authService.empl.isManager) {
       this.router.navigate(['login']);
     } else {
@@ -114,7 +110,7 @@ export class EmployeeComponent implements OnInit {
     this.reimService.getAllReimbursementsByEmplId(this.currentEmpl.emplId).subscribe(
       data => {
         if (data) {
-          this.allReim = data;
+          this.allReim = data.sort((a, b) => a.submitDate > b.submitDate ? 1 : -1);
           this.numOfReim = this.allReim.filter(r => r.status === 'resolved').length;
           this.totalAmountOfReim = this.allReim.filter(r => r.status === 'resolved').reduce((a, c) => a += c.amount, 0);
         }
@@ -162,6 +158,10 @@ export class EmployeeComponent implements OnInit {
         }
       }
     )
+  }
+
+  showReimByEmpl() {
+    this.showReim = !this.showReim;
   }
 
 }
