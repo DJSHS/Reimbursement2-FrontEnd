@@ -32,16 +32,9 @@ button {
 
 #show-reimbursements {
     float: left;
+    margin-bottom: 20px;
 }
 
 tbody tr {
     cursor: pointer;
-}
-
-#no-reimbursement-text {
-    font-size: 1.5em;
-}
-
-button {
-    margin-bottom: 20px;
 }
