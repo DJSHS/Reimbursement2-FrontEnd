@@ -24,6 +24,10 @@ a:hover {
     color: black;
 }
 
+a:active {
+    border: 1px solid lightgrey;
+}
+
 li {
     margin-right: 1.5em;
 }

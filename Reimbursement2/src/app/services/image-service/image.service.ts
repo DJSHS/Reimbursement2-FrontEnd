@@ -12,10 +12,9 @@ export class ImageService {
   constructor(private http: HttpClient) { }
 
   uploadImageForReim(image: File) {
-    return this.http.post(this.url+'receipts', image).toPromise();
-  }
+    let formData = new FormData();
+    formData.append('image', image);
 
-  uploadImageForEmpl(image: File) {
-    return this.http.post(this.url+'images', image).toPromise();
+    return this.http.post(this.url+'receipts', formData).toPromise();
   }
 }

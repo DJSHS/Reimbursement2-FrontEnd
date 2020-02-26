@@ -54,8 +54,9 @@
 				<td *ngIf="currentEmpl.emplId===authService.empl.emplId"><img class="edit" (click)="edit('description')" src="assets/pencil.png"/></td>
 			</tr>
 			<tr>
-				<th scope="col">Image</th>
-				<td>{{currentReim.receipt ? currentReim.receipt : 'N/A'}}</td>
+				<th scope="col">Invoice</th>
+				<td *ngIf="currentReim.receipt"><img class="receipt" [src]="path+currentReim.receipt" /></td>
+				<td *ngIf="!currentReim.receipt">N/A</td>
 				<td *ngIf="currentEmpl.emplId===authService.empl.emplId"></td>
 			</tr>
 		</table>
@@ -75,7 +76,7 @@
 			<button type="button" id="restore-btn" (click)="restore()" *ngIf="changed" class="btn btn-outline-info">Cancel</button>
 			<button type="button" id="update-btn" (click)="update()" *ngIf="changed" class="btn btn-outline-primary">Submit</button>
 			<button type="button" id="delete-btn" (click)="delete()" class="btn btn-outline-danger">Delete</button>
-		</div><br>
+		</div><br><br>
 	</div>
 	<div *ngIf="currentReim.result && resolvedByEmpl.emplId">
 		<table class="table table-hover">
@@ -124,8 +125,9 @@
 				<td>{{currentReim.reason ? currentReim.reason : ''}}</td>
 			</tr>
 			<tr>
-				<th scope="col">Image</th>
-				<td>{{currentReim.receipt ? currentReim.receipt : ''}}</td>
+				<th scope="col">Invoice</th>
+				<td *ngIf="currentReim.receipt"><img class="receipt" [src]="path+currentReim.receipt" /></td>
+				<td *ngIf="!currentReim.receipt">N/A</td>
 			</tr>
 		</table>
 	</div>

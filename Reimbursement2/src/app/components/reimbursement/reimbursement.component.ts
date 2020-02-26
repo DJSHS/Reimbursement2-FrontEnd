@@ -8,6 +8,7 @@ import { Reimbursement } from 'src/app/models/reimbursement';
 import { Employee } from 'src/app/models/employee';
 import { Department } from 'src/app/models/department';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-reimbursement',
@@ -23,11 +24,12 @@ export class ReimbursementComponent implements OnInit {
 
   originalReim: Reimbursement;
   result: string = '';
+  path: string = 'http://localhost:8080/image/';
   editable: string = '';
   changed: boolean = false;
   success: boolean = false;
 
-  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private reimService: ReimbursementService, private emplService: EmployeeService, private deptService: DepartmentService, private modalService: NgbModal) { }
+  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private reimService: ReimbursementService, private emplService: EmployeeService, private deptService: DepartmentService, private modalService: NgbModal, public domSanitizer: DomSanitizer) { }
 
   ngOnInit() {
     if (!this.authService.empl) {

@@ -38,16 +38,21 @@ export class NewReimbursementComponent implements OnInit {
       response => {
         if (response) {
           this.submited = true;
-          this.success = true;
-          setTimeout(() => this.success = false, 3000);
+          if (!this.newReim.receipt) {
+            this.success = true;
+            setTimeout(() => this.success = false, 3000);
+          }
 
-          // if (this.newReim.receipt) {
-          //   this.onUpload().then(
-          //     data => {
-          //       console.log(data);
-          //     }
-          //   )
-          // }
+          if (this.newReim.receipt) {
+            this.onUpload().then(
+              data => {
+                if (data) {
+                  this.success = true;
+                  setTimeout(() => this.success = false, 3000);
+                }
+              }
+            )
+          }
         } else {
           this.fail = true;
           setTimeout(() => this.fail = false, 3000);
@@ -64,7 +69,7 @@ export class NewReimbursementComponent implements OnInit {
   }
 
   onUpload() {
-    // return this.imageService.uploadImageForReim(this.selectedImg);
+    return this.imageService.uploadImageForReim(this.selectedImg);
   }
 
   removeImg() {
