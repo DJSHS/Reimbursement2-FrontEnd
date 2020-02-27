@@ -111,8 +111,8 @@ export class EmployeeComponent implements OnInit {
       data => {
         if (data) {
           this.allReim = data.sort((a, b) => a.submitDate > b.submitDate ? 1 : -1);
-          this.numOfReim = this.allReim.filter(r => r.status === 'resolved').length;
-          this.totalAmountOfReim = this.allReim.filter(r => r.status === 'resolved').reduce((a, c) => a += c.amount, 0);
+          this.numOfReim = this.allReim.filter(r => r.result === 'Approved').length;
+          this.totalAmountOfReim = this.allReim.filter(r => r.result === 'Approved').reduce((a, c) => a += c.amount, 0);
         }
       }, error => {
         console.warn(error);

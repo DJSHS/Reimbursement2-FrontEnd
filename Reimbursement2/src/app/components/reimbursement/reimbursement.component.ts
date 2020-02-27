@@ -28,6 +28,7 @@ export class ReimbursementComponent implements OnInit {
   editable: string = '';
   changed: boolean = false;
   success: boolean = false;
+  showImgModal: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private reimService: ReimbursementService, private emplService: EmployeeService, private deptService: DepartmentService, private modalService: NgbModal, public domSanitizer: DomSanitizer) { }
 
@@ -165,5 +166,9 @@ export class ReimbursementComponent implements OnInit {
   openAlertModal(content, res) {
     this.setResult(res);
     this.modalService.open(content, { centered: true });
+  }
+
+  toggleModal() {
+    this.showImgModal = !this.showImgModal;
   }
 }

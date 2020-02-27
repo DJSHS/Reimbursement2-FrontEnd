@@ -14,6 +14,11 @@
 	</div>
 </ng-template>
 
+<div id="myModal" [ngClass]="showImgModal ? 'modal' : 'hideModal'" *ngIf="currentReim.receipt">
+	<span class="close" (click)="toggleModal()">&times;</span>
+	<img class="modal-content" id="img01" [src]="path+currentReim.receipt">
+</div>
+
 <div *ngIf="currentReim.reimId && currentEmpl.emplId && currentDept.deptId" id="current-reim">
 	<p class="display-4">Reimbursement Detail</p>
 	<div *ngIf="!currentReim.result">
@@ -55,7 +60,7 @@
 			</tr>
 			<tr>
 				<th scope="col">Invoice</th>
-				<td *ngIf="currentReim.receipt"><img class="receipt" [src]="path+currentReim.receipt" /></td>
+				<td *ngIf="currentReim.receipt"><img class="receipt" [src]="path+currentReim.receipt" (click)="toggleModal()" /></td>
 				<td *ngIf="!currentReim.receipt">N/A</td>
 				<td *ngIf="currentEmpl.emplId===authService.empl.emplId"></td>
 			</tr>
@@ -126,7 +131,7 @@
 			</tr>
 			<tr>
 				<th scope="col">Invoice</th>
-				<td *ngIf="currentReim.receipt"><img class="receipt" [src]="path+currentReim.receipt" /></td>
+				<td *ngIf="currentReim.receipt"><img class="receipt" [src]="path+currentReim.receipt" (click)="toggleModal()" /></td>
 				<td *ngIf="!currentReim.receipt">N/A</td>
 			</tr>
 		</table>
