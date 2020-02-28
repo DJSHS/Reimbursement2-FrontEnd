@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
   managerName: string = '';
   newPass: string = '';
   confirmPass: string = '';
+  oldPass: string = '';
 
   originalProfile: Employee;
 
@@ -28,6 +29,7 @@ export class ProfileComponent implements OnInit {
   isUnqiueEmail: boolean = true;
   isUniquePhone: boolean = true;
   changed: boolean = false;
+  updated: boolean = false;
   success: boolean = false;
 
   constructor(private router: Router, private authService: AuthService, private emplService: EmployeeService, private deptService: DepartmentService, private validService: ValidationService) { }
@@ -86,31 +88,38 @@ export class ProfileComponent implements OnInit {
   }
 
   updateProfile() {
+    this.updated = true;
     if ((!this.newPass || (this.newPass === this.confirmPass && this.validService.validatePassword(this.newPass))) && this.validService.validateEmail(this.profile.email) && this.validService.validatePhone(this.profile.phone) && this.isUniquePhone && this.isUnqiueEmail) {
 
       this.profile.password = this.newPass ? this.newPass : this.profile.password;
-      this.profile.phone = this.validService.phoneFormat(this.profile.phone);
-      this.editable = '';
-      this.changed = false;
+      if ((this.newPass && this.oldPass === this.originalProfile.password) || !this.newPass) {
+        this.profile.phone = this.validService.phoneFormat(this.profile.phone);
+        this.editable = '';
+        this.changed = false;
 
-      this.emplService.updateEmployee(this.profile).then(
-        data => {
-          if (!data) {
-            this.newPass = '';
-            this.confirmPass = '';
-            this.getMyProfile();
-            this.success = true;
-            setTimeout(() => this.success = false, 5000);
+        this.emplService.updateEmployee(this.profile).then(
+          data => {
+            if (!data) {
+              this.updated = false;
+              this.oldPass = '';
+              this.newPass = '';
+              this.confirmPass = '';
+              this.getMyProfile();
+              this.success = true;
+              setTimeout(() => this.success = false, 5000);
+            }
           }
-        }
-      )
+        )
+      }
     }
   }
 
   restore() { 
     this.editable = '';
     this.changed = false;
+    this.updated = false;
     this.newPass = '';
+    this.oldPass = ''
     this.confirmPass = '';
     this.profile.email = this.originalProfile.email;
     this.profile.phone = this.originalProfile.phone;

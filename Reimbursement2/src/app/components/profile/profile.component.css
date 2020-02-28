@@ -34,3 +34,8 @@ input {
 #password-field input {
     border: 0.8px solid lightgray;
 }
+
+caption {
+    color: black;
+    font-size: large;
+}
