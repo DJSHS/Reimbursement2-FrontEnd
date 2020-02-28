@@ -62,13 +62,24 @@
       </tr>
       <tr>
         <th scope="col">Department</th>
-        <td>{{currentDept.deptName}}</td>
-        <td></td>
+        <td *ngIf="editable!=='department'">{{currentDept.deptName}}</td>
+        <td *ngIf="editable==='department'">
+          <select id="location" (change)='changeDept($event)'>
+              <option *ngFor="let dept of allDepts" [value]="dept.deptId">{{dept.deptName}}</option>
+          </select>
+        </td>
+        <td><img class="edit" (click)="edit('department')" src="assets/pencil.png"/></td>
       </tr>
       <tr>
         <th scope="col">Manager</th>
-        <td>{{managerName ? managerName : "Null"}}</td>
-        <td></td>
+        <td *ngIf="editable!=='manager'">{{managerName ? managerName : "Null"}}</td>
+        <td *ngIf="editable==='manager'">
+          <select id="location" (change)='changeManager($event)'>
+            <option selected value="0"> Null </option>
+            <option *ngFor="let manager of availableManagers" [value]="manager.emplId">{{manager.firstName}} {{manager.lastName}}</option>
+          </select>
+        </td>
+        <td><img class="edit" (click)="edit('manager')" src="assets/pencil.png"/></td>
       </tr>
       <tr>
         <th scope="col">Is Manager</th>

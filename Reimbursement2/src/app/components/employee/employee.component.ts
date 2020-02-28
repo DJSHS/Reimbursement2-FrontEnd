@@ -22,6 +22,9 @@ export class EmployeeComponent implements OnInit {
   currentDept: Department = new Department();
 
   allReim: Reimbursement[] = [];
+  allDepts: Department[] = [];
+  availableManagers: Employee[] = [];
+
   originalEmpl: Employee;
   managerName: string = '';
   emplName: string = '';
@@ -130,12 +133,23 @@ export class EmployeeComponent implements OnInit {
     } else {
       this.editable = attribute;
     }
+
+    if (this.editable === 'department') {
+      this.getAllDepts();
+    }
+
+    if (this.editable === 'manager') {
+      this.getAllAvailableManagers();
+    }
   }
 
   restore() {
     this.changed = false;
     this.editable = '';
     this.currentEmpl = Object.assign({}, this.originalEmpl);
+    this.currentDept = this.allDepts.find(d => d.deptId == this.currentEmpl.deptId);
+    this.currentManager = this.availableManagers.find(e => e.emplId == this.currentEmpl.managerId);
+    this.managerName = `${this.currentManager.firstName} ${this.currentManager.lastName}`;
   }
 
   updateEmployee() {
@@ -162,6 +176,43 @@ export class EmployeeComponent implements OnInit {
 
   showReimByEmpl() {
     this.showReim = !this.showReim;
+  }
+
+  getAllDepts() {
+    this.deptService.getAllDepts().subscribe(
+      data => {
+        if (data) {
+          this.allDepts = data.filter(d => d.deptId === this.currentEmpl.deptId).concat(data.filter(d => d.deptId !== this.currentEmpl.deptId));
+        }
+      }, error => {
+        console.warn(error);
+      }
+    )
+  }
+
+  getAllAvailableManagers() {
+    this.emplService.getAllEmployees().subscribe(
+      data => {
+        if (data) {
+          this.availableManagers = data.filter(e => (e.deptId == this.currentEmpl.deptId && e.isManager > this.currentEmpl.isManager) || e.emplId === this.currentEmpl.managerId);
+        }
+      }, error => {
+        console.warn(error);
+      }
+    )
+  }
+
+  changeDept(event) {
+    this.changed = true;
+    this.currentEmpl.deptId = event.target.value;
+    this.currentDept = this.allDepts.find(d => d.deptId == this.currentEmpl.deptId);
+  }
+
+  changeManager(event) {
+    this.changed = true;
+    this.currentEmpl.managerId = event.target.value;
+    this.currentManager = this.availableManagers.find(e => e.emplId == this.currentEmpl.managerId);
+    this.managerName = `${this.currentManager.firstName} ${this.currentManager.lastName}`;
   }
 
 }
